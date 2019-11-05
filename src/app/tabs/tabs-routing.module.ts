@@ -13,7 +13,7 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: () =>
-              import('../region-map/region-map.module').then(m => m.RegionMapPageModule)
+              import('./region-map/region-map.module').then(m => m.RegionMapPageModule)
           }
         ]
       },
@@ -23,7 +23,7 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: () =>
-              import('../observation/observation.module').then(m => m.ObservationPageModule)
+              import('./observation/observation.module').then(m => m.ObservationPageModule)
           }
         ]
       },
@@ -32,8 +32,11 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: () =>
-              import('../wiki/wiki.module').then(m => m.WikiPageModule)
+            loadChildren: () => {
+              const m = import('./wiki/wiki.module').then(m => m.WikiPageModule);
+              console.log('Loaded!!');
+              return m;
+            }
           }
         ]
       },
@@ -43,7 +46,7 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: () =>
-              import('../account/account.module').then(m => m.AccountPageModule)
+              import('./account/account.module').then(m => m.AccountPageModule)
           }
         ]
       }
