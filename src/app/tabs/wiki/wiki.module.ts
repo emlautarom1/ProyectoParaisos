@@ -23,4 +23,4 @@ const routes: Routes = [
   ],
   declarations: [WikiPage]
 })
-export class WikiPageModule {}
+export class WikiPageModule { }

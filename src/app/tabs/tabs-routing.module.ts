@@ -32,11 +32,8 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: () => {
-              const m = import('./wiki/wiki.module').then(m => m.WikiPageModule);
-              console.log('Loaded!!');
-              return m;
-            }
+            loadChildren: () =>
+              import('./wiki/wiki.module').then(m => m.WikiPageModule)
           }
         ]
       },
