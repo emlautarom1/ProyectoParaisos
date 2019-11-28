@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GeolocationService } from 'src/app/services/geolocation.service';
 
 @Component({
   selector: 'app-observation',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./observation.page.scss'],
 })
 export class ObservationPage implements OnInit {
+  coords: Coordinates;
 
-  constructor() { }
+  constructor(private geo: GeolocationService) { }
 
   ngOnInit() {
+    this.geo.watchLocation().subscribe((pos: Position) => {
+      this.coords = pos.coords;
+    });
   }
 
 }

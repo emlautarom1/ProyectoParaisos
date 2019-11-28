@@ -5,5 +5,9 @@
 </ion-header>
 
 <ion-content>
-
+  <agm-map *ngIf="coords" [latitude]="coords.latitude" [longitude]="coords.longitude" [zoom]="20"
+    disableDefaultUI="true" mapTypeId="hybrid">
+    <agm-marker [latitude]=" coords.latitude" [longitude]="coords.longitude">
+    </agm-marker>
+  </agm-map>
 </ion-content>
