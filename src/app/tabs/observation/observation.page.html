@@ -1,13 +1,73 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Observaciones</ion-title>
+    <ion-title>{{ getCurrentTitle() }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <agm-map *ngIf="coords" [latitude]="coords.latitude" [longitude]="coords.longitude" [zoom]="20"
-    disableDefaultUI="true" mapTypeId="hybrid">
-    <agm-marker [latitude]=" coords.latitude" [longitude]="coords.longitude">
-    </agm-marker>
-  </agm-map>
+<ion-content scroll-y="false">
+  <!-- TODO: Step '0' with small tutorial for first time users -->
+
+  <!-- Step 1 -->
+  <div *ngIf="currentStep == 1" style="height: 100%">
+    <agm-map *ngIf="coords" [latitude]="coords.latitude" [longitude]="coords.longitude" [zoom]="20"
+      disableDefaultUI="true" mapTypeId="hybrid" style="height: 100%">
+      <agm-marker [latitude]=" coords.latitude" [longitude]="coords.longitude">
+      </agm-marker>
+    </agm-map>
+  </div>
+
+  <!-- Step 2 -->
+  <div *ngIf="currentStep == 2" style="height: 100%">
+    <div id="prompt-or-selected-container">
+      <div id="prompt-or-selected-picture" style="width: 60%">
+        <img *ngIf="picture" [src]="picture" alt="Loaded Picture">
+        <svg *ngIf="!picture" style="opacity: 10%; width: 100%;" xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 352 352">
+          <defs />
+          <path
+            d="M333 16a56 56 0 00-40-16h-54v22h53a35 35 0 0135 35v57h22V56c0-15-6-29-16-40zM35 320c-6-6-10-15-10-25v-57H3v58c0 15 7 29 17 40 11 10 25 16 40 16h54v-22H60c-9 0-18-4-25-10zM327 296a35 35 0 01-35 35h-53v21h53c16 0 30-6 40-16 11-10 17-24 17-40v-58h-22v58zM20 16A56 56 0 004 56v58h21V56c0-9 4-18 11-24 6-7 15-11 25-11h53V0H60C45 0 31 6 20 16z" />
+        </svg>
+      </div>
+      <input #imginput type="file" accept="image/*" id="capture" capture="camera" style="display: none"
+        (change)="onInputChange($event.target.files)">
+    </div>
+
+    <div id="taken-pictures">
+      <span>
+        <img src="https://4.img-dpreview.com/files/p/E~TS590x0~articles/3925134721/0266554465.jpeg" alt="">
+      </span>
+      <span>
+        <img src="https://fdn.gsmarena.com/imgroot/news/19/10/meizu-16t-camera-sample/-640/gsmarena_002.jpg" alt="">
+      </span>
+      <span>
+        <img src="https://4.img-dpreview.com/files/p/E~TS590x0~articles/3925134721/0266554465.jpeg" alt="">
+      </span>
+      <span>
+        <img src="https://www.cameraegg.org/wp-content/uploads/2013/02/Leica-M-Sample-Image.jpg" alt="">
+      </span>
+      <span>
+        <img
+          src="https://imgsv.imaging.nikon.com/lineup/lens/f-mount/zoom/normalzoom/af-s_dx_18-300mmf_35-56g_ed_vr/img/sample/sample4_l.jpg"
+          alt="">
+      </span>
+      <span>
+        <img src="https://www.visioncritical.com/hubfs/Imported_Blog_Media/BLG_Andrew-G_-River-Sample_09_13_12.png"
+          alt="">
+      </span>
+      <span>
+        <img src="http://grafinoticias.com.mx/wp-content/uploads/2018/10/Nikon-1-V3-sample-photo.jpg" alt="">
+      </span>
+      <span>
+        <img src="https://www.cameraegg.org/wp-content/uploads/2013/02/Leica-M-Sample-Image.jpg" alt="">
+      </span>
+    </div>
+  </div>
+
 </ion-content>
+
+<ion-footer class="ion-padding-horizontal">
+  <ion-toolbar>
+    <ion-button slot="start" color="danger" [disabled]="currentStep == 1" (click)="onGoBackClick()">Volver</ion-button>
+    <ion-button slot="end" (click)="onContinueClick()">Continuar</ion-button>
+  </ion-toolbar>
+</ion-footer>
