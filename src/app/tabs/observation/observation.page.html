@@ -4,11 +4,11 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content scroll-y="false">
+<ion-content>
   <!-- TODO: Step '0' with small tutorial for first time users -->
 
   <!-- Step 1 -->
-  <div *ngIf="currentStep == 1" style="height: 100%">
+  <div *ngIf="currentStep === 1" style="height: 100%">
     <agm-map *ngIf="coords" [latitude]="coords.latitude" [longitude]="coords.longitude" [zoom]="20"
       disableDefaultUI="true" mapTypeId="hybrid" style="height: 100%">
       <agm-marker [latitude]=" coords.latitude" [longitude]="coords.longitude">
@@ -17,7 +17,7 @@
   </div>
 
   <!-- Step 2 -->
-  <div *ngIf="currentStep == 2" style="height: 100%">
+  <div *ngIf="currentStep === 2" style="height: 100%">
     <div id="prompt-or-selected-container">
       <div id="prompt-or-selected-picture" style="width: 60%">
         <img *ngIf="picture" [src]="picture" alt="Loaded Picture">
@@ -63,11 +63,116 @@
     </div>
   </div>
 
+  <!-- Step 3 -->
+  <div *ngIf="currentStep === 3" style="height: 100%;">
+    <ion-list>
+      <ion-list-header>
+        Acerca de la Observación
+      </ion-list-header>
+
+      <ion-item>
+        <ion-label>Fecha</ion-label>
+        <ion-datetime displayFormat="DD/MMM/YY" pickerFormat="DD MMM YY" [value]="date" yearValues="2019,2020,2021"
+          cancel-text="Cancelar" done-text="Aceptar">
+        </ion-datetime>
+      </ion-item>
+
+      <ion-item lines="full">
+        <ion-label>Dirección</ion-label>
+        <ion-spinner *ngIf="!address" name="crescent"></ion-spinner>
+        <ion-label *ngIf="address"> {{ address }}</ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ion-list>
+      <ion-list-header>
+        Acerca del Árbol
+      </ion-list-header>
+      <ion-item lines="full">
+        <ion-label>Nombre</ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">
+          Diámetro
+        </ion-label>
+        <ion-input></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">
+          Altura
+        </ion-label>
+        <ion-input></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>
+          Fenología
+        </ion-label>
+        <ion-select multiple cancel-text="Cancelar" ok-text="Ok">
+          <ion-select-option value="caida-hojas">Caida Hojas</ion-select-option>
+          <ion-select-option value="floracion">Floración</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>
+          Síntomas
+        </ion-label>
+        <ion-select multiple cancel-text="Cancelar" ok-text="Ok">
+          <ion-select-option value="amarillamiento-hojas">Amarillamiento de Hojas</ion-select-option>
+          <ion-select-option value="escoba-de-brujas">Escoba de Brujas</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>
+          Sanidad
+        </ion-label>
+        <ion-select cancel-text="Cancelar" ok-text="Ok">
+          <ion-select-option value="muy-buena">Muy Buena</ion-select-option>
+          <ion-select-option value="buena">Buena</ion-select-option>
+          <ion-select-option value="mala">Mala</ion-select-option>
+          <ion-select-option value="muerta">Muerto</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item lines="full">
+        <ion-label>
+          Poda Correcta
+        </ion-label>
+        <ion-checkbox slot=end></ion-checkbox>
+      </ion-item>
+    </ion-list>
+
+    <ion-list>
+      <ion-list-header>
+        Adicionales
+      </ion-list-header>
+
+      <ion-item lines="none">
+        <ion-label>
+          Tutor
+        </ion-label>
+        <ion-checkbox slot=end></ion-checkbox>
+      </ion-item>
+
+      <ion-item (click)="onAddComments()" lines="none" button detail>
+        <ion-label>
+          Añadir Comentarios
+        </ion-label>
+      </ion-item>
+
+    </ion-list>
+  </div>
+
 </ion-content>
 
 <ion-footer class="ion-padding-horizontal">
   <ion-toolbar>
     <ion-button slot="start" color="danger" [disabled]="currentStep == 1" (click)="onGoBackClick()">Volver</ion-button>
-    <ion-button slot="end" (click)="onContinueClick()">Continuar</ion-button>
+    <ion-button *ngIf="currentStep !== 3" slot="end" (click)="onContinueClick()">Continuar</ion-button>
+    <ion-button *ngIf="currentStep === 3" slot="end" (click)="onFinishClick()">Finalizar</ion-button>
   </ion-toolbar>
 </ion-footer>
