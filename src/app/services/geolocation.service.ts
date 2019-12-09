@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { AgmGeocoder, GeocoderRequest } from '@agm/core';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +9,7 @@ import { Observable } from 'rxjs';
 export class GeolocationService {
   private position: Observable<Position>;
 
-  constructor() {
+  constructor(private geocoder: AgmGeocoder) {
     if ('geolocation' in navigator)
       this.position = Observable.create((observer: any) => {
         var watchId = window.navigator.geolocation.watchPosition(
@@ -27,7 +29,20 @@ export class GeolocationService {
     }
   }
 
-  watchLocation() {
+  coordsToAddress(coords: Coordinates) {
+    const { latitude, longitude } = coords;
+    const request: GeocoderRequest = {
+      location: {
+        lat: latitude,
+        lng: longitude
+      }
+    }
+    return this.geocoder.geocode(request).pipe(
+      map(res => res[0].address_components[0].long_name)
+    );
+  }
+
+  watchLocation(): Observable<Position> {
     if (this.position) {
       return this.position;
     } else {
