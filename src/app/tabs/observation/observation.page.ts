@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { GeolocationService } from 'src/app/services/geolocation.service';
 import { DateService } from 'src/app/services/date.service';
-import { ObservationFormService } from 'src/app/services/observation-form.service';
 
 @Component({
   selector: 'app-observation',
