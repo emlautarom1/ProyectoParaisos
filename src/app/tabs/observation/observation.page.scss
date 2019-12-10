@@ -23,3 +23,10 @@
     }
   }
 }
+
+#step-3 {
+  ion-item {
+    --min-height: 50px;
+    --max-height: 50px;
+  }
+}

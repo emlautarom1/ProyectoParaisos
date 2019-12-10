@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { GeolocationService } from 'src/app/services/geolocation.service';
 import { DateService } from 'src/app/services/date.service';
 
@@ -12,23 +13,51 @@ export class ObservationPage implements OnInit {
 
   currentStep = 3;
 
-  coords: Coordinates;
-  picture: String | ArrayBuffer;
-  address: String;
-  date: String;
+  observacion: FormGroup;
 
   constructor(
     private geoS: GeolocationService,
     private dateS: DateService,
+    private formBuilder: FormBuilder,
   ) { }
 
   ngOnInit() {
+    this.observacion = this.buildForm();
+
     this.geoS.watchLocation().subscribe((pos: Position) => {
-      this.coords = pos.coords;
+      this.observacion.patchValue({ coords: pos.coords });
       this.geoS.coordsToAddress(pos.coords)
-        .subscribe(addr => this.address = addr);
+        .subscribe(addr => {
+          this.observacion.patchValue({ direccion: addr });
+        });
     });
-    this.date = this.dateS.getCurrentDate();
+  }
+
+  private buildForm() {
+    // TODO: Agregar validacion
+    return this.formBuilder.group({
+      fecha: this.dateS.getCurrentDate(),
+      direccion: null,
+      coords: null,
+      fotos: [],
+      nombre: {
+        cientifico: null,
+        vulgar: null,
+      },
+      diametro: null,
+      altura: null,
+      fenologia: null,
+      sintomas: [],
+      sanidad: null,
+      podaCorrecta: false,
+      taza: false,
+      tutor: false,
+      observaciones: null
+    })
+  }
+
+  get direccion() {
+    return this.observacion.get('direccion').value;
   }
 
   getCurrentTitle() {
@@ -54,10 +83,12 @@ export class ObservationPage implements OnInit {
 
   onInputChange(files: FileList) {
     if (files && files.length) {
-      // Should be responsability of "PicturesService"
+      // TODO: Mover a un servicio de Fotos
       const reader = new FileReader();
       reader.onload = (event: ProgressEvent) => {
-        this.picture = (event.target as any).result;
+        const loadedPhotos = this.observacion.get('fotos').value;
+        const newPhoto = (event.target as any).result;
+        this.observacion.patchValue({ fotos: [...loadedPhotos, newPhoto] });
       };
       reader.readAsDataURL(files[0]);
     }
@@ -67,7 +98,7 @@ export class ObservationPage implements OnInit {
     console.log('clicked');
   }
 
-  async onFinishClick() {
-    console.log("finish");
+  onFinish() {
+    console.log("Form: ", this.observacion.value);
   }
 }
