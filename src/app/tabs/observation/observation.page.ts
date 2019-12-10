@@ -13,7 +13,7 @@ import { TreeNameComponent } from './tree-name/tree-name.component';
 export class ObservationPage implements OnInit {
   @ViewChild('imginput', { static: false }) imageInput: ElementRef;
 
-  currentStep = 3;
+  currentStep = 2;
 
   observacion: FormGroup;
   fotoSeleccionada: String | null;
@@ -111,8 +111,15 @@ export class ObservationPage implements OnInit {
     }
   }
 
+  onSelectedPicture(foto: String) {
+    this.fotoSeleccionada = foto;
+  }
+
   borrarFoto(foto: String) {
     const fotos = this.fotos.filter(ft => ft !== foto);
+    if (this.fotoSeleccionada === foto) {
+      this.fotoSeleccionada = null;
+    }
     this.observacion.patchValue({ fotos: fotos });
   }
 

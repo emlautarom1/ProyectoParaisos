@@ -1,9 +1,23 @@
 #prompt-or-selected-container {
+  height: 60%;
+}
+
+#prompt-or-selected-picture {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 60%;
+  height: 100%;
+
+  #selected-picture {
+    max-height: 80%;
+    max-width: 80%;
+    border-radius: 5px;
+  }
+
+  #picture-prompt {
+    height: 60%;
+  }
 }
 
 #taken-pictures-container {
@@ -17,6 +31,7 @@
   .taken-picture {
     box-sizing: border-box;
     flex: 0 0 33.3%;
+    position: relative;
 
     .delete-picture-button {
       position: absolute;
