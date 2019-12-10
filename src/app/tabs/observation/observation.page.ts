@@ -98,7 +98,6 @@ export class ObservationPage implements OnInit {
         const fotosCargadas = this.observacion.get('fotos').value || [];
         const nuevaFoto = (event.target as any).result;
         const fotos = [...fotosCargadas, nuevaFoto];
-        console.log(fotos);
         this.observacion.patchValue({ fotos: fotos });
       };
       reader.readAsDataURL(files[0]);
