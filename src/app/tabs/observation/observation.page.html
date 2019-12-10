@@ -8,16 +8,16 @@
   <!-- TODO: Step '0' with small tutorial for first time users -->
 
   <!-- Step 1 -->
-  <div *ngIf="currentStep === 1" style="height: 100%">
+  <div id="step-1" *ngIf="currentStep === 1" style="height: 100%">
     <agm-map *ngIf="coords" [latitude]="coords.latitude" [longitude]="coords.longitude" [zoom]="20"
       disableDefaultUI="true" mapTypeId="hybrid" style="height: 100%">
-      <agm-marker [latitude]=" coords.latitude" [longitude]="coords.longitude">
+      <agm-marker [latitude]="coords.latitude" [longitude]="coords.longitude">
       </agm-marker>
     </agm-map>
   </div>
 
   <!-- Step 2 -->
-  <div *ngIf="currentStep === 2" style="height: 100%">
+  <div id="step-2" *ngIf="currentStep === 2" style="height: 100%">
     <div id="prompt-or-selected-container">
       <div id="prompt-or-selected-picture" style="width: 60%">
         <img *ngIf="picture" [src]="picture" alt="Loaded Picture">

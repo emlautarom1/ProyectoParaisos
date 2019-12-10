@@ -11,7 +11,7 @@ import { DateService } from 'src/app/services/date.service';
 export class ObservationPage implements OnInit {
   @ViewChild('imginput', { static: false }) imageInput: ElementRef;
 
-  currentStep = 3;
+  currentStep = 1;
 
   observacion: FormGroup;
 
@@ -54,6 +54,10 @@ export class ObservationPage implements OnInit {
       tutor: false,
       observaciones: null
     })
+  }
+
+  get coords() {
+    return this.observacion.get('coords').value;
   }
 
   get direccion() {
