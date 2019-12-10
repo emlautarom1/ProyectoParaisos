@@ -81,8 +81,9 @@
         <ion-list-header>
           Acerca del Árbol
         </ion-list-header>
-        <ion-item lines="inset">
+        <ion-item lines="inset" button [detail]="!(nombre.vulgar)" (click)="showNameModal()">
           <ion-label>Nombre</ion-label>
+          <ion-label style="text-align: end;" *ngIf="(nombre.vulgar)"> {{ nombre.vulgar }}</ion-label>
         </ion-item>
 
         <ion-item lines="inset">

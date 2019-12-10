@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { AgmCoreModule } from '@agm/core';
 
 import { ObservationPage } from './observation.page';
+import { TreeNameComponent } from './tree-name/tree-name.component';
 import { GeolocationService } from 'src/app/services/geolocation.service';
 
 const routes: Routes = [
@@ -26,7 +27,11 @@ const routes: Routes = [
     AgmCoreModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ObservationPage],
+  declarations: [
+    TreeNameComponent,
+    ObservationPage
+  ],
+  entryComponents: [TreeNameComponent],
   providers: [GeolocationService]
 })
 export class ObservationPageModule { }

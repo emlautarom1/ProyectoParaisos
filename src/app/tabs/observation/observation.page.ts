@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { GeolocationService } from 'src/app/services/geolocation.service';
 import { DateService } from 'src/app/services/date.service';
+import { ModalController } from '@ionic/angular';
+import { TreeNameComponent } from './tree-name/tree-name.component';
 
 @Component({
   selector: 'app-observation',
@@ -11,7 +13,7 @@ import { DateService } from 'src/app/services/date.service';
 export class ObservationPage implements OnInit {
   @ViewChild('imginput', { static: false }) imageInput: ElementRef;
 
-  currentStep = 2;
+  currentStep = 3;
 
   observacion: FormGroup;
   fotoSeleccionada: String | null;
@@ -20,6 +22,7 @@ export class ObservationPage implements OnInit {
     private geoS: GeolocationService,
     private dateS: DateService,
     private formBuilder: FormBuilder,
+    private modalCtrl: ModalController,
   ) { }
 
   ngOnInit() {
@@ -69,6 +72,10 @@ export class ObservationPage implements OnInit {
     return this.observacion.get('fotos').value;
   }
 
+  get nombre() {
+    return this.observacion.get('nombre').value;
+  }
+
   getCurrentTitle() {
     switch (this.currentStep) {
       case 1: return "Tu ubicación actual";
@@ -107,6 +114,20 @@ export class ObservationPage implements OnInit {
   borrarFoto(foto: String) {
     const fotos = this.fotos.filter(ft => ft !== foto);
     this.observacion.patchValue({ fotos: fotos });
+  }
+
+  async showNameModal() {
+    const modal = await this.modalCtrl.create({
+      component: TreeNameComponent,
+      componentProps: {
+        modalCtrl: this.modalCtrl
+      }
+    });
+    await modal.present();
+    const { data } = await modal.onWillDismiss();
+    if (data) {
+      this.observacion.patchValue({ nombre: data });
+    }
   }
 
   onAddComments() {
