@@ -3,18 +3,31 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 70%;
+  height: 60%;
 }
 
-#taken-pictures {
+#taken-pictures-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  height: 30%;
+  height: 40%;
   overflow-y: scroll;
-  span {
+  box-shadow: 0px -2px 3px 0px rgba(0, 0, 0, 0.15);
+
+  .taken-picture {
     box-sizing: border-box;
     flex: 0 0 33.3%;
+
+    .delete-picture-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 2px;
+      background-color: white;
+      border-radius: 100%;
+      box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.35);
+    }
+
     img {
       padding: 1px;
       width: 100%;

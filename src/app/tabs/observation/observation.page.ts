@@ -11,9 +11,10 @@ import { DateService } from 'src/app/services/date.service';
 export class ObservationPage implements OnInit {
   @ViewChild('imginput', { static: false }) imageInput: ElementRef;
 
-  currentStep = 1;
+  currentStep = 2;
 
   observacion: FormGroup;
+  fotoSeleccionada: String | null;
 
   constructor(
     private geoS: GeolocationService,
@@ -56,12 +57,16 @@ export class ObservationPage implements OnInit {
     })
   }
 
-  get coords() {
+  get coords(): Coordinates {
     return this.observacion.get('coords').value;
   }
 
-  get direccion() {
+  get direccion(): String {
     return this.observacion.get('direccion').value;
+  }
+
+  get fotos(): String[] {
+    return this.observacion.get('fotos').value;
   }
 
   getCurrentTitle() {
@@ -90,12 +95,19 @@ export class ObservationPage implements OnInit {
       // TODO: Mover a un servicio de Fotos
       const reader = new FileReader();
       reader.onload = (event: ProgressEvent) => {
-        const loadedPhotos = this.observacion.get('fotos').value;
-        const newPhoto = (event.target as any).result;
-        this.observacion.patchValue({ fotos: [...loadedPhotos, newPhoto] });
+        const fotosCargadas = this.observacion.get('fotos').value || [];
+        const nuevaFoto = (event.target as any).result;
+        const fotos = [...fotosCargadas, nuevaFoto];
+        console.log(fotos);
+        this.observacion.patchValue({ fotos: fotos });
       };
       reader.readAsDataURL(files[0]);
     }
+  }
+
+  borrarFoto(foto: String) {
+    const fotos = this.fotos.filter(ft => ft !== foto);
+    this.observacion.patchValue({ fotos: fotos });
   }
 
   onAddComments() {
