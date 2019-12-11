@@ -10,6 +10,7 @@ import { AgmCoreModule } from '@agm/core';
 import { ObservationPage } from './observation.page';
 import { TreeNameComponent } from './tree-name/tree-name.component';
 import { GeolocationService } from 'src/app/services/geolocation.service';
+import { AddCommentComponent } from './add-comment/add-comment.component';
 
 const routes: Routes = [
   {
@@ -29,9 +30,13 @@ const routes: Routes = [
   ],
   declarations: [
     TreeNameComponent,
+    AddCommentComponent,
     ObservationPage
   ],
-  entryComponents: [TreeNameComponent],
+  entryComponents: [
+    TreeNameComponent,
+    AddCommentComponent
+  ],
   providers: [GeolocationService]
 })
 export class ObservationPageModule { }
