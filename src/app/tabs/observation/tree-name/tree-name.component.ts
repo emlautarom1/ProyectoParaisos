@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TreeNamesService } from 'src/app/services/tree-names.service';
+import { ValuesProviderService } from "src/app/services/observation/values-provider.service"
 import { NombreArbol } from 'src/app/models/observacion-arbol';
 import { ModalController } from '@ionic/angular';
 
@@ -13,10 +13,10 @@ export class TreeNameComponent implements OnInit {
 
   nombres: NombreArbol[];
 
-  constructor(private namesS: TreeNamesService) { }
+  constructor(private values: ValuesProviderService) { }
 
   ngOnInit() {
-    this.nombres = this.namesS.getTreeNames();
+    this.nombres = this.values.getNombresArbol();
   }
 
   cancelSelection() {
