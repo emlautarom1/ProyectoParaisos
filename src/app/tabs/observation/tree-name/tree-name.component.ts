@@ -9,7 +9,7 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./tree-name.component.scss'],
 })
 export class TreeNameComponent implements OnInit {
-  @Input() modalCtrl: ModalController
+  @Input() modalCtrl: ModalController;
 
   nombres: NombreArbol[];
 

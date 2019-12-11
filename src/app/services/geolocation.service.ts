@@ -10,9 +10,9 @@ export class GeolocationService {
   private position: Observable<Position>;
 
   constructor(private geocoder: AgmGeocoder) {
-    if ('geolocation' in navigator)
+    if ('geolocation' in navigator) {
       this.position = Observable.create((observer: any) => {
-        var watchId = window.navigator.geolocation.watchPosition(
+        const watchId = window.navigator.geolocation.watchPosition(
           function success(pos) {
             observer.next(pos);
           },
@@ -24,8 +24,8 @@ export class GeolocationService {
           window.navigator.geolocation.clearWatch(watchId);
         };
       });
-    else {
-      console.error("Geolocation not available in 'navigator'");
+    } else {
+      console.error('Geolocation not available in \'navigator\'');
     }
   }
 
@@ -36,7 +36,7 @@ export class GeolocationService {
         lat: latitude,
         lng: longitude
       }
-    }
+    };
     return this.geocoder.geocode(request).pipe(
       map(res => res[0].address_components[0].long_name)
     );
@@ -46,7 +46,7 @@ export class GeolocationService {
     if (this.position) {
       return this.position;
     } else {
-      throw new Error("Current location is not defined");
+      throw new Error('Current location is not defined');
     }
   }
 }
