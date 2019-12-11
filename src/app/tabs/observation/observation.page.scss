@@ -12,7 +12,18 @@
   #selected-picture {
     max-height: 80%;
     max-width: 80%;
-    border-radius: 5px;
+    position: relative;
+
+    .delete-button-big {
+      width: 25px;
+      height: 25px;
+    }
+
+    img {
+      border-radius: 5px;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 
   #picture-prompt {
@@ -33,16 +44,6 @@
     flex: 0 0 33.3%;
     position: relative;
 
-    .delete-picture-button {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      padding: 2px;
-      background-color: white;
-      border-radius: 100%;
-      box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.35);
-    }
-
     img {
       padding: 1px;
       width: 100%;
@@ -52,9 +53,19 @@
   }
 }
 
+.delete-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 2px;
+  background-color: white;
+  border-radius: 100%;
+  box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.35);
+}
+
 #step-3 {
   ion-item {
-    --min-height: 50px;
-    --max-height: 50px;
+    --min-height: 55px;
+    --max-height: 55px;
   }
 }

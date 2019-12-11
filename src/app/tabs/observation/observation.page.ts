@@ -1,9 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+
 import { NoNullValuesValidator } from 'src/app/utils/custom-validators';
 import { GeolocationService } from 'src/app/services/geolocation.service';
 import { DateService } from 'src/app/services/date.service';
+import { FormValuesService } from 'src/app/services/observation/form-values.service';
+
 import { TreeNameComponent } from './tree-name/tree-name.component';
 import { AddCommentComponent } from './add-comment/add-comment.component';
 
@@ -15,7 +18,12 @@ import { AddCommentComponent } from './add-comment/add-comment.component';
 export class ObservationPage implements OnInit {
   @ViewChild('imginput', { static: false }) imageInput: ElementRef;
 
-  currentStep = 3;
+  currentStep = 2;
+
+  alturas: string[];
+  fenologias: string[];
+  sintomas: string[];
+  sanidades: string[];
 
   observacion: FormGroup;
   fotoSeleccionada: String | null;
@@ -24,10 +32,16 @@ export class ObservationPage implements OnInit {
     private geoS: GeolocationService,
     private dateS: DateService,
     private formBuilder: FormBuilder,
+    private formValues: FormValuesService,
     private modalCtrl: ModalController,
   ) { }
 
   ngOnInit() {
+    this.sanidades = this.formValues.getSanidades();
+    this.alturas = this.formValues.getAlturas();
+    this.fenologias = this.formValues.getFenologias();
+    this.sintomas = this.formValues.getSintomas();
+
     this.observacion = this.buildForm();
 
     this.geoS.watchLocation().subscribe((pos: Position) => {
@@ -58,10 +72,7 @@ export class ObservationPage implements OnInit {
       ],
       altura: [
         null,
-        [
-          Validators.required,
-          Validators.pattern('^[0-9]*(.[0-9]+)?$')
-        ]
+        Validators.required,
       ],
       fenologia: [
         [],
@@ -134,10 +145,14 @@ export class ObservationPage implements OnInit {
     this.fotoSeleccionada = foto;
   }
 
+  clearSelectedPicture() {
+    this.fotoSeleccionada = null;
+  }
+
   borrarFoto(foto: String) {
     const fotos = this.fotos.filter(ft => ft !== foto);
     if (this.fotoSeleccionada === foto) {
-      this.fotoSeleccionada = null;
+      this.clearSelectedPicture();
     }
     this.observacion.patchValue({ fotos });
   }

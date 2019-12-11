@@ -34,7 +34,10 @@
   <div id="step-2" *ngIf="currentStep === 2" style="height: 100%">
     <div id="prompt-or-selected-container">
       <div id="prompt-or-selected-picture">
-        <img id="selected-picture" *ngIf="fotoSeleccionada" [src]="fotoSeleccionada">
+        <div id="selected-picture" *ngIf="fotoSeleccionada">
+          <img [src]="fotoSeleccionada">
+          <ion-icon class="delete-button delete-button-big" name="close" (click)="clearSelectedPicture()"></ion-icon>
+        </div>
         <div id="picture-prompt" *ngIf="!fotoSeleccionada" (click)="imginput.click()">
           <svg style="opacity: 10%; height: 100%" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 352">
             <defs />
@@ -50,7 +53,7 @@
     <div id="taken-pictures-container">
       <span class="taken-picture" *ngFor="let foto of fotos">
         <img [src]="foto" alt="" (click)="onSelectedPicture(foto)">
-        <ion-icon class="delete-picture-button" name="close" (click)="borrarFoto(foto)"></ion-icon>
+        <ion-icon class="delete-button" name="close" (click)="borrarFoto(foto)"></ion-icon>
       </span>
     </div>
   </div>
@@ -94,10 +97,12 @@
         </ion-item>
 
         <ion-item lines="inset">
-          <ion-label position="floating">
+          <ion-label>
             Altura
           </ion-label>
-          <ion-input type="number" formControlName="altura"></ion-input>
+          <ion-select cancel-text="Cancelar" ok-text="Ok" formControlName="altura">
+            <ion-select-option *ngFor="let altura of alturas">{{ altura }}</ion-select-option>
+          </ion-select>
         </ion-item>
 
         <ion-item lines="inset">
@@ -105,9 +110,7 @@
             Fenología
           </ion-label>
           <ion-select multiple cancel-text="Cancelar" ok-text="Ok" formControlName="fenologia">
-            <!-- TODO: Estos valores deben provenir de un servicio -->
-            <ion-select-option>Caida de Hojas</ion-select-option>
-            <ion-select-option>Floración</ion-select-option>
+            <ion-select-option *ngFor="let fen of fenologias">{{ fen }}</ion-select-option>
           </ion-select>
         </ion-item>
 
@@ -116,9 +119,7 @@
             Síntomas
           </ion-label>
           <ion-select multiple cancel-text="Cancelar" ok-text="Ok" formControlName="sintomas">
-            <!-- TODO: Estos valores deben provenir de un servicio -->
-            <ion-select-option>Amarillamiento de Hojas</ion-select-option>
-            <ion-select-option>Escoba de Brujas</ion-select-option>
+            <ion-select-option *ngFor="let sint of sintomas">{{ sint }}</ion-select-option>
           </ion-select>
         </ion-item>
 
@@ -127,11 +128,7 @@
             Sanidad
           </ion-label>
           <ion-select cancel-text="Cancelar" ok-text="Ok" formControlName="sanidad">
-            <!-- TODO: Estos valores deben provenir de un servicio -->
-            <ion-select-option>Muy Bueno</ion-select-option>
-            <ion-select-option>Bueno</ion-select-option>
-            <ion-select-option>Malo</ion-select-option>
-            <ion-select-option>Muerto</ion-select-option>
+            <ion-select-option *ngFor="let san of sanidades">{{ san }}</ion-select-option>
           </ion-select>
         </ion-item>
 
