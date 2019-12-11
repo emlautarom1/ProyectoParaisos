@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ModalController } from '@ionic/angular';
+import { NoNullValuesValidator } from 'src/app/utils/custom-validators';
 import { GeolocationService } from 'src/app/services/geolocation.service';
 import { DateService } from 'src/app/services/date.service';
-import { ModalController } from '@ionic/angular';
 import { TreeNameComponent } from './tree-name/tree-name.component';
+import { AddCommentComponent } from './add-comment/add-comment.component';
 
 @Component({
   selector: 'app-observation',
@@ -13,7 +15,7 @@ import { TreeNameComponent } from './tree-name/tree-name.component';
 export class ObservationPage implements OnInit {
   @ViewChild('imginput', { static: false }) imageInput: ElementRef;
 
-  currentStep = 2;
+  currentStep = 3;
 
   observacion: FormGroup;
   fotoSeleccionada: String | null;
@@ -38,26 +40,43 @@ export class ObservationPage implements OnInit {
   }
 
   private buildForm() {
-    // TODO: Agregar validacion
     return this.formBuilder.group({
       fecha: this.dateS.getCurrentDate(),
-      direccion: null,
-      coords: null,
+      direccion: [null, Validators.required],
+      coords: [null, Validators.required],
       fotos: [],
-      nombre: {
+      nombre: [{
         cientifico: null,
         vulgar: null,
-      },
-      diametro: null,
-      altura: null,
-      fenologia: null,
+      }, NoNullValuesValidator],
+      diametro: [
+        null,
+        [
+          Validators.required,
+          Validators.pattern('^[0-9]*(.[0-9]+)?$')
+        ]
+      ],
+      altura: [
+        null,
+        [
+          Validators.required,
+          Validators.pattern('^[0-9]*(.[0-9]+)?$')
+        ]
+      ],
+      fenologia: [
+        [],
+        [
+          Validators.required,
+          Validators.minLength(1)
+        ]
+      ],
       sintomas: [],
-      sanidad: null,
+      sanidad: [null, Validators.required],
       podaCorrecta: false,
       taza: false,
       tutor: false,
-      observaciones: null
-    })
+      comentario: ""
+    });
   }
 
   get coords(): Coordinates {
@@ -76,12 +95,12 @@ export class ObservationPage implements OnInit {
     return this.observacion.get('nombre').value;
   }
 
-  getCurrentTitle() {
+  get currentTitle() {
     switch (this.currentStep) {
-      case 1: return "Tu ubicación actual";
-      case 2: return "Toma unas Fotos";
-      case 3: return "Agrega unos detalles";
-      default: return `<ERROR: Paso ${this.currentStep}>`
+      case 1: return 'Tu ubicación actual';
+      case 2: return 'Toma unas Fotos';
+      case 3: return 'Agrega unos detalles';
+      default: return `<ERROR: Paso ${this.currentStep}>`;
     }
   }
 
@@ -93,7 +112,7 @@ export class ObservationPage implements OnInit {
 
   onContinueClick() {
     if (this.currentStep !== 3) {
-      this.currentStep++
+      this.currentStep++;
     }
   }
 
@@ -105,7 +124,7 @@ export class ObservationPage implements OnInit {
         const fotosCargadas = this.observacion.get('fotos').value || [];
         const nuevaFoto = (event.target as any).result;
         const fotos = [...fotosCargadas, nuevaFoto];
-        this.observacion.patchValue({ fotos: fotos });
+        this.observacion.patchValue({ fotos });
       };
       reader.readAsDataURL(files[0]);
     }
@@ -120,7 +139,7 @@ export class ObservationPage implements OnInit {
     if (this.fotoSeleccionada === foto) {
       this.fotoSeleccionada = null;
     }
-    this.observacion.patchValue({ fotos: fotos });
+    this.observacion.patchValue({ fotos });
   }
 
   async showNameModal() {
@@ -137,11 +156,25 @@ export class ObservationPage implements OnInit {
     }
   }
 
-  onAddComments() {
-    console.log('clicked');
+  async showAddCommentModal() {
+    const comentarioActual = this.observacion.get('comentario').value;
+
+    const modal = await this.modalCtrl.create({
+      component: AddCommentComponent,
+      componentProps: {
+        modalCtrl: this.modalCtrl,
+        comentario: comentarioActual
+      }
+    });
+
+    await modal.present();
+    const { data } = await modal.onWillDismiss();
+    if (data) {
+      this.observacion.patchValue({ comentario: data });
+    }
   }
 
   onFinish() {
-    console.log("Form: ", this.observacion.value);
+    console.log('Form: ', this.observacion.value);
   }
 }

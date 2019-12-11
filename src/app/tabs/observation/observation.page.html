@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{ getCurrentTitle() }}</ion-title>
+    <ion-title>{{ currentTitle }}</ion-title>
     <ion-buttons slot="start" *ngIf="currentStep !== 1">
       <ion-button (click)="onGoBackClick()">
         <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
@@ -11,6 +11,7 @@
         <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
       </ion-button>
       <ion-button *ngIf="currentStep === 3" (click)="onFinish()">
+        <!-- [disabled]="!observacion.valid" -->
         <ion-icon slot="icon-only" name="checkmark"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -89,14 +90,14 @@
           <ion-label position="floating">
             Diámetro
           </ion-label>
-          <ion-input formControlName="diametro"></ion-input>
+          <ion-input type="number" formControlName="diametro"></ion-input>
         </ion-item>
 
         <ion-item lines="inset">
           <ion-label position="floating">
             Altura
           </ion-label>
-          <ion-input formControlName="altura"></ion-input>
+          <ion-input type="number" formControlName="altura"></ion-input>
         </ion-item>
 
         <ion-item lines="inset">
@@ -162,7 +163,7 @@
           <ion-checkbox slot="end" formControlName="tutor"></ion-checkbox>
         </ion-item>
 
-        <ion-item (click)="onAddComments()" lines="none" button detail>
+        <ion-item (click)="showAddCommentModal()" lines="none" button detail>
           <ion-label>
             Añadir Comentarios
           </ion-label>
