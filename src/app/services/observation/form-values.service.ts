@@ -20,10 +20,10 @@ export class FormValuesService {
 
   getAlturas(): string[] {
     return [
-      '0-2m',
-      '2-4m',
-      '4-10m',
-      'más de 10'
+      '0 - 2m.',
+      '2 - 4m.',
+      '4 - 10m.',
+      'más de 10m.'
     ]
   }
 
