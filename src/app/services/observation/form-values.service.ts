@@ -1,16 +1,48 @@
 import { Injectable } from '@angular/core';
-import { NombreArbol } from 'src/app/models/observacion-arbol';
+import { NombreArbol } from 'src/app/models/nombre-arbol';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ValuesProviderService {
+export class FormValuesService {
+  // TODO: Se deberia hacer por medio de pedidos HTTP y no con valores hard-codeados
 
   constructor() { }
 
-  getAlturas() {
+  getSanidades(): string[] {
     return [
+      'Muy Bueno',
+      'Bueno',
+      'Malo',
+      'Muerto'
+    ]
+  }
 
+  getAlturas(): string[] {
+    return [
+      '0-2m',
+      '2-4m',
+      '4-10m',
+      'más de 10'
+    ]
+  }
+
+  getFenologias(): string[] {
+    return [
+      'Caida de Hojas',
+      'Floración',
+      'Follaje Completo',
+      'Rebrote',
+      'Fructificación',
+    ]
+  }
+
+  getSintomas(): string[] {
+    return [
+      'Amarillamiento de Hojas',
+      'Escoba de Brujas',
+      'Reducción de Hojas',
+      'Otros'
     ]
   }
 
