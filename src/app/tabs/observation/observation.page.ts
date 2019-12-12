@@ -118,7 +118,7 @@ export class ObservationPage implements OnInit {
   get currentTitle(): string {
     switch (this.currentStep) {
       case 1: return 'Tu ubicación actual';
-      case 2: return 'Toma unas Fotos';
+      case 2: return 'Toma unas fotos';
       case 3: return 'Agrega unos detalles';
       default: return `<ERROR: Paso ${this.currentStep}>`;
     }
