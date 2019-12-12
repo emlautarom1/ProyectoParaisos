@@ -7,6 +7,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFirestoreModule } from "@angular/fire/firestore"
 import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { AgmCoreModule } from '@agm/core';
@@ -21,8 +22,9 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireStorageModule,
     AngularFireAuthModule,
+    AngularFirestoreModule,
+    AngularFireStorageModule,
     AgmCoreModule.forRoot(environment.mapsConfig),
     AppRoutingModule,
     IonicModule.forRoot(),
