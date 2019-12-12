@@ -10,23 +10,21 @@ import { User } from '@app/models/user';
   providedIn: 'root'
 })
 export class AuthService {
-  private authState: Observable<firebase.User>;
+  isAuthenticated = false;
 
   constructor(private afAuth: AngularFireAuth) {
-    this.authState = afAuth.authState;
+    this.authenticated.subscribe(result => {
+      this.isAuthenticated = result;
+    });
   }
 
-  get state(): Observable<boolean> {
-    return this.authState.pipe(map(st => st !== null));
-  }
-
-  get isAuthenticated() {
-    return this.authState !== null;
+  get authenticated(): Observable<boolean> {
+    return this.afAuth.authState.pipe(map(st => st !== null));
   }
 
   async getUserDetails(): Promise<User | undefined> {
     if (this.isAuthenticated) {
-      const { displayName, email } = await this.authState.toPromise();
+      const { displayName, email } = await this.afAuth.authState.toPromise();
       return {
         displayName, email
       };
@@ -35,8 +33,7 @@ export class AuthService {
 
   public async signIn() {
     const googleProvider = new firebase.auth.GoogleAuthProvider();
-    const credentials = await this.afAuth.auth.signInWithPopup(googleProvider);
-    console.log('Creds: ', credentials);
+    await this.afAuth.auth.signInWithPopup(googleProvider);
   }
 
   public async signOut() {
