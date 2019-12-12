@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Cuenta</ion-title>
+    <ion-title>Mi Cuenta</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -18,7 +18,7 @@
       </ion-item>
     </div>
     <div id="logged-in-buttons">
-      <ion-button expand="block" fill="outline" color="danger" (click)="logOut()">
+      <ion-button expand="block" fill="outline" color="danger" (click)="signOut()">
         Cerrar Sesión
       </ion-button>
     </div>
@@ -27,7 +27,7 @@
   <div *ngIf="!loggedIn" id="not-logged-container">
     <h3>No has iniciado sesión</h3>
     <img src="assets/imgs/people.jpg" alt="Iniciar Sesión">
-    <ion-button expand="full" (click)="logIn()" style="width: 100%;">
+    <ion-button expand="full" (click)="signIn()" style="width: 100%;">
       Iniciar Sesión
       <ion-icon slot="end" name="logo-google"></ion-icon>
     </ion-button>
