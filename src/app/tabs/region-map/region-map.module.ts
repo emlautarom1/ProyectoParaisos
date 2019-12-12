@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { RegionMapPage } from './region-map.page';
+import { PlaceholdersModule } from '@app/placeholders/placeholders.module';
 
 const routes: Routes = [
   {
@@ -19,7 +20,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    PlaceholdersModule
   ],
   declarations: [RegionMapPage]
 })
