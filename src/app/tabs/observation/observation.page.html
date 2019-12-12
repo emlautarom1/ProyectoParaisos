@@ -10,8 +10,7 @@
       <ion-button *ngIf="currentStep !== 3" (click)="onContinueClick()">
         <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
       </ion-button>
-      <ion-button *ngIf="currentStep === 3" (click)="onFinish()">
-        <!-- [disabled]="!form.valid" -->
+      <ion-button *ngIf="currentStep === 3" [disabled]="!form.valid" (click)="onFinish()">
         <ion-icon slot="icon-only" name="checkmark"></ion-icon>
       </ion-button>
     </ion-buttons>
