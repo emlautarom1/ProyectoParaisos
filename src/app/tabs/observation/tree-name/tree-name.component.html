@@ -9,10 +9,10 @@
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let nombre of nombres" (click)="onNameSelected(nombre)">
+    <ion-item *ngFor="let name of names" (click)="onNameSelected(name)">
       <ion-label>
-        <h2> {{ nombre.vulgar }} </h2>
-        <p> {{ nombre.cientifico }} </p>
+        <h2> {{ name.vulgar }} </h2>
+        <p> {{ name.cientifico }} </p>
       </ion-label>
     </ion-item>
   </ion-list>

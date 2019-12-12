@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormValuesService } from '@app/services/observation/form-values.service';
-import { NombreArbol } from '@app/models/nombre-arbol';
+import { Name as TreeName } from "@app/models/tree"
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -11,19 +11,19 @@ import { ModalController } from '@ionic/angular';
 export class TreeNameComponent implements OnInit {
   @Input() modalCtrl: ModalController;
 
-  nombres: NombreArbol[];
+  names: TreeName[];
 
   constructor(private values: FormValuesService) { }
 
   ngOnInit() {
-    this.nombres = this.values.getNombresArbol();
+    this.names = this.values.getNombresArbol();
   }
 
   cancelSelection() {
     this.modalCtrl.dismiss();
   }
 
-  onNameSelected(nombre: NombreArbol) {
-    this.modalCtrl.dismiss(nombre);
+  onNameSelected(name: TreeName) {
+    this.modalCtrl.dismiss(name);
   }
 }
