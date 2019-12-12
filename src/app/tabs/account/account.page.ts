@@ -14,8 +14,8 @@ export class AccountPage implements OnInit {
   constructor(private auth: AuthService) { }
 
   ngOnInit() {
-    this.auth.state.subscribe(loggedIn => {
-      this.loggedIn = loggedIn;
+    this.auth.authenticated.subscribe(res => {
+      this.loggedIn = res;
     })
   }
 
