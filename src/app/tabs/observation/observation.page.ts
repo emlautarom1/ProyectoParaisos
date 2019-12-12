@@ -11,6 +11,7 @@ import { UploadService } from '@app/services/upload.service';
 
 import { TreeNameComponent } from './tree-name/tree-name.component';
 import { AddCommentComponent } from './add-comment/add-comment.component';
+import { AuthService } from '@app/services/auth.service';
 
 interface FormPicture {
   file: File,
@@ -43,6 +44,7 @@ export class ObservationPage implements OnInit {
     private formValues: FormValuesService,
     private formParser: FormParserService,
     private uploadS: UploadService,
+    private authS: AuthService,
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
     private modalCtrl: ModalController,
@@ -204,6 +206,10 @@ export class ObservationPage implements OnInit {
     const pictures = this.pictures && this.pictures.length > 0
       ? this.pictures.map(pic => pic.file)
       : [];
+    if (!this.authS.isAuthenticated) {
+      await this.showToast('Inicia sesión para continuar');
+      return;
+    }
     try {
       const loading = await this.showLoading();
 
