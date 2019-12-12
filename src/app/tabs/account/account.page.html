@@ -1,9 +1,35 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Mi Cuenta</ion-title>
+    <ion-title>Cuenta</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
+  <div *ngIf="loggedIn" id="logged-in-container">
+    <div id="current-user">
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="assets/icons/icon-512x512.png">
+        </ion-avatar>
+        <ion-label>
+          <h3>Lautaro Emanuel</h3>
+          <p>emlautarom1@gmail.com</p>
+        </ion-label>
+      </ion-item>
+    </div>
+    <div id="logged-in-buttons">
+      <ion-button expand="block" fill="outline" color="danger" (click)="logOut()">
+        Cerrar Sesión
+      </ion-button>
+    </div>
+  </div>
 
+  <div *ngIf="!loggedIn" id="not-logged-container">
+    <h3>No has iniciado sesión</h3>
+    <img src="assets/imgs/people.jpg" alt="Iniciar Sesión">
+    <ion-button expand="full" (click)="logIn()" style="width: 100%;">
+      Iniciar Sesión
+      <ion-icon slot="end" name="logo-google"></ion-icon>
+    </ion-button>
+  </div>
 </ion-content>

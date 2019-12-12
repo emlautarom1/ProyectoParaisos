@@ -6,10 +6,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./account.page.scss'],
 })
 export class AccountPage implements OnInit {
+  loggedIn = true;
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  logIn() {
+    this.loggedIn = true;
+  }
+
+  logOut() {
+    this.loggedIn = false;
   }
 
 }
