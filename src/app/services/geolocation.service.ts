@@ -29,12 +29,11 @@ export class GeolocationService {
     }
   }
 
-  coordsToAddress(coords: Coordinates) {
-    const { latitude, longitude } = coords;
+  latLngToAddress(lat: number, lng: number) {
     const request: GeocoderRequest = {
       location: {
-        lat: latitude,
-        lng: longitude
+        lat,
+        lng
       }
     };
     return this.geocoder.geocode(request).pipe(
