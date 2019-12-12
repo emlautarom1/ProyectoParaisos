@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalController, ToastController } from '@ionic/angular';
+import { ModalController, ToastController, LoadingController } from '@ionic/angular';
 
 import { NoNullValuesValidator } from '@app/utils/custom-validators';
 import { GeolocationService } from '@app/services/geolocation.service';
@@ -43,6 +43,7 @@ export class ObservationPage implements OnInit {
     private formValues: FormValuesService,
     private formParser: FormParserService,
     private uploadS: UploadService,
+    private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
     private modalCtrl: ModalController,
   ) { }
@@ -204,13 +205,26 @@ export class ObservationPage implements OnInit {
       ? this.pictures.map(pic => pic.file)
       : [];
     try {
+      const loading = await this.showLoading();
+
       const obs = this.formParser.formToObservation(form);
       await this.uploadS.uploadObservation(obs, pictures);
+
+      loading.dismiss();
+
       await this.showToast('Observación guardada exitosamente.')
       this.resetPage();
     } catch (error) {
       await this.showToast('Se ha producido un error.');
     }
+  }
+
+  private async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Guardando...',
+    });
+    await loading.present();
+    return loading;
   }
 
   private async showToast(msg: string) {
