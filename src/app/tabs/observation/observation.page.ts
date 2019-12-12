@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LatLngLiteral } from '@agm/core';
 import { ModalController, ToastController, LoadingController } from '@ionic/angular';
 
 import { NoNullValuesValidator } from '@app/utils/custom-validators';
@@ -8,10 +9,12 @@ import { DateService } from '@app/services/date.service';
 import { FormValuesService } from '@app/services/observation/form-values.service';
 import { FormParserService } from "@app/services/observation/form-parser.service";
 import { UploadService } from '@app/services/upload.service';
+import { AuthService } from '@app/services/auth.service';
+
+import { Name as TreeName } from '@app/models/tree';
 
 import { TreeNameComponent } from './tree-name/tree-name.component';
 import { AddCommentComponent } from './add-comment/add-comment.component';
-import { AuthService } from '@app/services/auth.service';
 
 interface FormPicture {
   file: File,
@@ -105,7 +108,7 @@ export class ObservationPage implements OnInit {
     });
   }
 
-  get coords(): Coordinates {
+  get coords(): LatLngLiteral {
     return this.form.get('coords').value;
   }
 
@@ -113,7 +116,7 @@ export class ObservationPage implements OnInit {
     return this.form.get('direccion').value;
   }
 
-  get nombre(): string {
+  get nombre(): TreeName {
     return this.form.get('nombre').value;
   }
 
