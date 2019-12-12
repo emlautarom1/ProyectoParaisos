@@ -33,7 +33,7 @@ export class AuthService {
 
   public async signIn() {
     const googleProvider = new firebase.auth.GoogleAuthProvider();
-    await this.afAuth.auth.signInWithPopup(googleProvider);
+    await this.afAuth.auth.signInWithRedirect(googleProvider);
   }
 
   public async signOut() {
