@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
@@ -10,10 +11,9 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { AgmCoreModule } from '@agm/core';
 
+import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent],

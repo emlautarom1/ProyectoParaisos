@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NombreArbol } from 'src/app/models/nombre-arbol';
+import { NombreArbol } from '@app/models/nombre-arbol';
 
 @Injectable({
   providedIn: 'root'

@@ -2,10 +2,10 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 
-import { NoNullValuesValidator } from 'src/app/utils/custom-validators';
-import { GeolocationService } from 'src/app/services/geolocation.service';
-import { DateService } from 'src/app/services/date.service';
-import { FormValuesService } from 'src/app/services/observation/form-values.service';
+import { NoNullValuesValidator } from '@app/utils/custom-validators';
+import { GeolocationService } from '@app/services/geolocation.service';
+import { DateService } from '@app/services/date.service';
+import { FormValuesService } from '@app/services/observation/form-values.service';
 
 import { TreeNameComponent } from './tree-name/tree-name.component';
 import { AddCommentComponent } from './add-comment/add-comment.component';
