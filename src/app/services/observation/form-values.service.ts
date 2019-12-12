@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NombreArbol } from '@app/models/nombre-arbol';
+import { Name as TreeName } from '@app/models/tree';
 
 @Injectable({
   providedIn: 'root'
@@ -46,7 +46,7 @@ export class FormValuesService {
     ]
   }
 
-  getNombresArbol(): NombreArbol[] {
+  getNombresArbol(): TreeName[] {
     return [
       {
         cientifico: 'Acer spp',
