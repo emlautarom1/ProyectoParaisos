@@ -37,7 +37,7 @@ export class GeolocationService {
       }
     };
     return this.geocoder.geocode(request).pipe(
-      map(res => res[0].address_components[0].long_name)
+      map(res => res[1].formatted_address)
     );
   }
 
