@@ -10,7 +10,8 @@
       <ion-button *ngIf="currentStep !== 3" (click)="onContinueClick()">
         <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
       </ion-button>
-      <ion-button *ngIf="currentStep === 3" [disabled]="!observacion.valid" (click)="onFinish()">
+      <ion-button *ngIf="currentStep === 3" (click)="onFinish()">
+        <!-- [disabled]="!form.valid" -->
         <ion-icon slot="icon-only" name="checkmark"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -22,6 +23,10 @@
 
   <!-- Step 1 -->
   <div id="step-1" *ngIf="currentStep === 1" style="height: 100%">
+    <div id="map-spinner-container" *ngIf="!coords">
+      <ion-spinner></ion-spinner>
+      <p>Cargando ubicación</p>
+    </div>
     <agm-map *ngIf="coords" [latitude]="coords.lat" [longitude]="coords.lng" [zoom]="20" disableDefaultUI="true"
       mapTypeId="hybrid" style="height: 100%">
       <agm-marker [latitude]="coords.lat" [longitude]="coords.lng">
@@ -43,6 +48,7 @@
             <path
               d="M333 16a56 56 0 00-40-16h-54v22h53a35 35 0 0135 35v57h22V56c0-15-6-29-16-40zM35 320c-6-6-10-15-10-25v-57H3v58c0 15 7 29 17 40 11 10 25 16 40 16h54v-22H60c-9 0-18-4-25-10zM327 296a35 35 0 01-35 35h-53v21h53c16 0 30-6 40-16 11-10 17-24 17-40v-58h-22v58zM20 16A56 56 0 004 56v58h21V56c0-9 4-18 11-24 6-7 15-11 25-11h53V0H60C45 0 31 6 20 16z" />
           </svg>
+          <p style="opacity: 30%">Pulse aquí para cargar fotos</p>
         </div>
       </div>
       <input #imginput type="file" accept="image/*" id="capture" capture="camera" style="display: none"

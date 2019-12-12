@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 
 import { NoNullValuesValidator } from '@app/utils/custom-validators';
 import { GeolocationService } from '@app/services/geolocation.service';
@@ -31,9 +31,9 @@ export class ObservationPage implements OnInit {
   fenologias: string[];
   sintomas: string[];
   sanidades: string[];
-  pictures: FormPicture[]
 
   form: FormGroup;
+  pictures: FormPicture[]
   selectedPicture: FormPicture | null;
 
   constructor(
@@ -43,6 +43,7 @@ export class ObservationPage implements OnInit {
     private formValues: FormValuesService,
     private formParser: FormParserService,
     private uploadS: UploadService,
+    private toastCtrl: ToastController,
     private modalCtrl: ModalController,
   ) { }
 
@@ -205,9 +206,44 @@ export class ObservationPage implements OnInit {
     try {
       const obs = this.formParser.formToObservation(form);
       await this.uploadS.uploadObservation(obs, pictures);
+      await this.showToast('Observación guardada exitosamente.')
+      this.resetPage();
     } catch (error) {
-      // TODO: Mostrar el error en una alerta/toast
-      console.error(error);
+      await this.showToast('Se ha producido un error.');
     }
+  }
+
+  private async showToast(msg: string) {
+    const toast = await this.toastCtrl.create({
+      message: msg,
+      buttons: [{
+        icon: 'close',
+        role: 'cancel',
+      }],
+      duration: 2500
+    });
+    toast.present();
+  }
+
+  private resetPage() {
+    this.form.patchValue({
+      nombre: {
+        cientifico: null,
+        vulgar: null,
+      },
+      diametro: null,
+      altura: null,
+      fenologia: [],
+      sintomas: [],
+      sanidad: null,
+      podaCorrecta: false,
+      taza: false,
+      tutor: false,
+      comentario: ""
+    })
+    this.form.markAsUntouched();
+    this.pictures = [];
+    this.selectedPicture = null;
+    this.currentStep = 1;
   }
 }
