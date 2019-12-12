@@ -10,8 +10,7 @@
       <ion-button *ngIf="currentStep !== 3" (click)="onContinueClick()">
         <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
       </ion-button>
-      <ion-button *ngIf="currentStep === 3" (click)="onFinish()">
-        <!-- [disabled]="!observacion.valid" -->
+      <ion-button *ngIf="currentStep === 3" [disabled]="!observacion.valid" (click)="onFinish()">
         <ion-icon slot="icon-only" name="checkmark"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -23,9 +22,9 @@
 
   <!-- Step 1 -->
   <div id="step-1" *ngIf="currentStep === 1" style="height: 100%">
-    <agm-map *ngIf="coords" [latitude]="coords.latitude" [longitude]="coords.longitude" [zoom]="20"
-      disableDefaultUI="true" mapTypeId="hybrid" style="height: 100%">
-      <agm-marker [latitude]="coords.latitude" [longitude]="coords.longitude">
+    <agm-map *ngIf="coords" [latitude]="coords.lat" [longitude]="coords.lng" [zoom]="20" disableDefaultUI="true"
+      mapTypeId="hybrid" style="height: 100%">
+      <agm-marker [latitude]="coords.lat" [longitude]="coords.lng">
       </agm-marker>
     </agm-map>
   </div>
@@ -34,11 +33,11 @@
   <div id="step-2" *ngIf="currentStep === 2" style="height: 100%">
     <div id="prompt-or-selected-container">
       <div id="prompt-or-selected-picture">
-        <div id="selected-picture" *ngIf="fotoSeleccionada">
-          <img [src]="fotoSeleccionada">
+        <div id="selected-picture" *ngIf="selectedPicture">
+          <img [src]="selectedPicture.b64">
           <ion-icon class="delete-button delete-button-big" name="close" (click)="clearSelectedPicture()"></ion-icon>
         </div>
-        <div id="picture-prompt" *ngIf="!fotoSeleccionada" (click)="imginput.click()">
+        <div id="picture-prompt" *ngIf="!selectedPicture" (click)="imginput.click()">
           <svg style="opacity: 10%; height: 100%" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 352">
             <defs />
             <path
@@ -51,16 +50,16 @@
     </div>
 
     <div id="taken-pictures-container">
-      <span class="taken-picture" *ngFor="let foto of fotos">
-        <img [src]="foto" alt="" (click)="onSelectedPicture(foto)">
-        <ion-icon class="delete-button" name="close" (click)="borrarFoto(foto)"></ion-icon>
+      <span class="taken-picture" *ngFor="let picture of pictures">
+        <img [src]="picture.b64" alt="" (click)="onSelectedPicture(picture)">
+        <ion-icon class="delete-button" name="close" (click)="deletePicture(picture)"></ion-icon>
       </span>
     </div>
   </div>
 
   <!-- Step 3 -->
   <div id="step-3" *ngIf="currentStep === 3" style="height: 100%;">
-    <form [formGroup]="observacion" (ngSubmit)="onFinish()">
+    <form [formGroup]="form" (ngSubmit)="onFinish()">
       <ion-list>
         <ion-list-header>
           Acerca de la Observación

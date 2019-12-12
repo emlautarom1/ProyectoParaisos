@@ -6,9 +6,16 @@ import { NoNullValuesValidator } from '@app/utils/custom-validators';
 import { GeolocationService } from '@app/services/geolocation.service';
 import { DateService } from '@app/services/date.service';
 import { FormValuesService } from '@app/services/observation/form-values.service';
+import { FormParserService } from "@app/services/observation/form-parser.service";
+import { UploadService } from '@app/services/upload.service';
 
 import { TreeNameComponent } from './tree-name/tree-name.component';
 import { AddCommentComponent } from './add-comment/add-comment.component';
+
+interface FormPicture {
+  file: File,
+  b64: string
+}
 
 @Component({
   selector: 'app-observation',
@@ -18,21 +25,24 @@ import { AddCommentComponent } from './add-comment/add-comment.component';
 export class ObservationPage implements OnInit {
   @ViewChild('imginput', { static: false }) imageInput: ElementRef;
 
-  currentStep = 2;
+  currentStep = 1;
 
   alturas: string[];
   fenologias: string[];
   sintomas: string[];
   sanidades: string[];
+  pictures: FormPicture[]
 
-  observacion: FormGroup;
-  fotoSeleccionada: String | null;
+  form: FormGroup;
+  selectedPicture: FormPicture | null;
 
   constructor(
     private geoS: GeolocationService,
     private dateS: DateService,
     private formBuilder: FormBuilder,
     private formValues: FormValuesService,
+    private formParser: FormParserService,
+    private uploadS: UploadService,
     private modalCtrl: ModalController,
   ) { }
 
@@ -42,13 +52,15 @@ export class ObservationPage implements OnInit {
     this.fenologias = this.formValues.getFenologias();
     this.sintomas = this.formValues.getSintomas();
 
-    this.observacion = this.buildForm();
+    this.form = this.buildForm();
 
     this.geoS.watchLocation().subscribe((pos: Position) => {
-      this.observacion.patchValue({ coords: pos.coords });
-      this.geoS.coordsToAddress(pos.coords)
+      const { latitude: lat, longitude: lng } = pos.coords;
+      const latlng = { lat, lng };
+      this.form.patchValue({ coords: latlng });
+      this.geoS.latLngToAddress(lat, lng)
         .subscribe(addr => {
-          this.observacion.patchValue({ direccion: addr });
+          this.form.patchValue({ direccion: addr });
         });
     });
   }
@@ -58,7 +70,6 @@ export class ObservationPage implements OnInit {
       fecha: this.dateS.getCurrentDate(),
       direccion: [null, Validators.required],
       coords: [null, Validators.required],
-      fotos: [],
       nombre: [{
         cientifico: null,
         vulgar: null,
@@ -91,22 +102,18 @@ export class ObservationPage implements OnInit {
   }
 
   get coords(): Coordinates {
-    return this.observacion.get('coords').value;
+    return this.form.get('coords').value;
   }
 
-  get direccion(): String {
-    return this.observacion.get('direccion').value;
+  get direccion(): string {
+    return this.form.get('direccion').value;
   }
 
-  get fotos(): String[] {
-    return this.observacion.get('fotos').value;
+  get nombre(): string {
+    return this.form.get('nombre').value;
   }
 
-  get nombre() {
-    return this.observacion.get('nombre').value;
-  }
-
-  get currentTitle() {
+  get currentTitle(): string {
     switch (this.currentStep) {
       case 1: return 'Tu ubicación actual';
       case 2: return 'Toma unas Fotos';
@@ -131,30 +138,31 @@ export class ObservationPage implements OnInit {
     if (files && files.length) {
       // TODO: Mover a un servicio de Fotos
       const reader = new FileReader();
+      const file = files[0];
       reader.onload = (event: ProgressEvent) => {
-        const fotosCargadas = this.observacion.get('fotos').value || [];
-        const nuevaFoto = (event.target as any).result;
-        const fotos = [...fotosCargadas, nuevaFoto];
-        this.observacion.patchValue({ fotos });
+        const uploadedPictures = this.pictures || [];
+        const b64 = (event.target as any).result;
+        const newPicture: FormPicture = { file, b64 };
+        this.pictures = [...uploadedPictures, newPicture];
       };
-      reader.readAsDataURL(files[0]);
+      reader.readAsDataURL(file);
     }
   }
 
-  onSelectedPicture(foto: String) {
-    this.fotoSeleccionada = foto;
+  onSelectedPicture(picture: FormPicture) {
+    this.selectedPicture = picture;
   }
 
   clearSelectedPicture() {
-    this.fotoSeleccionada = null;
+    this.selectedPicture = null;
   }
 
-  borrarFoto(foto: String) {
-    const fotos = this.fotos.filter(ft => ft !== foto);
-    if (this.fotoSeleccionada === foto) {
+  deletePicture(picture: FormPicture) {
+    const pictures = this.pictures.filter(pic => pic !== picture);
+    if (this.selectedPicture === picture) {
       this.clearSelectedPicture();
     }
-    this.observacion.patchValue({ fotos });
+    this.pictures = pictures;
   }
 
   async showNameModal() {
@@ -167,29 +175,39 @@ export class ObservationPage implements OnInit {
     await modal.present();
     const { data } = await modal.onWillDismiss();
     if (data) {
-      this.observacion.patchValue({ nombre: data });
+      this.form.patchValue({ nombre: data });
     }
   }
 
   async showAddCommentModal() {
-    const comentarioActual = this.observacion.get('comentario').value;
+    const currentComment = this.form.get('comentario').value;
 
     const modal = await this.modalCtrl.create({
       component: AddCommentComponent,
       componentProps: {
         modalCtrl: this.modalCtrl,
-        comentario: comentarioActual
+        comentario: currentComment
       }
     });
 
     await modal.present();
     const { data } = await modal.onWillDismiss();
     if (data) {
-      this.observacion.patchValue({ comentario: data });
+      this.form.patchValue({ comentario: data });
     }
   }
 
-  onFinish() {
-    console.log('Form: ', this.observacion.value);
+  async onFinish() {
+    const form = this.form.value;
+    const pictures = this.pictures && this.pictures.length > 0
+      ? this.pictures.map(pic => pic.file)
+      : [];
+    try {
+      const obs = this.formParser.formToObservation(form);
+      await this.uploadS.uploadObservation(obs, pictures);
+    } catch (error) {
+      // TODO: Mostrar el error en una alerta/toast
+      console.error(error);
+    }
   }
 }
