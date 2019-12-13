@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from "@angular/fire/auth"
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, first } from 'rxjs/operators';
 
 import { User } from '@app/models/user';
 
@@ -24,9 +24,10 @@ export class AuthService {
 
   async getUserDetails(): Promise<User | undefined> {
     if (this.isAuthenticated) {
-      const { displayName, email } = await this.afAuth.authState.toPromise();
+      const { displayName, email } = await this.afAuth.authState.pipe(first()).toPromise();
       return {
-        displayName, email
+        displayName,
+        email
       };
     }
   }

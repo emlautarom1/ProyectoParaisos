@@ -16,12 +16,19 @@ export class AccountPage implements OnInit {
   ngOnInit() {
     this.auth.authenticated.subscribe(res => {
       this.loggedIn = res;
+      if (this.loggedIn) {
+        this.updateUser();
+      }
     })
+  }
+
+  async updateUser() {
+    this.userDetails = await this.auth.getUserDetails();
   }
 
   async signIn() {
     await this.auth.signIn();
-    this.userDetails = await this.auth.getUserDetails();
+    await this.updateUser();
   }
 
   async signOut() {
