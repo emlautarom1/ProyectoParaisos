@@ -24,10 +24,11 @@ export class AuthService {
 
   async getUserDetails(): Promise<User | undefined> {
     if (this.isAuthenticated) {
-      const { displayName, email } = await this.afAuth.authState.pipe(first()).toPromise();
+      const { displayName, email, photoURL } = await this.afAuth.authState.pipe(first()).toPromise();
       return {
         displayName,
-        email
+        email,
+        photoURL
       };
     }
   }

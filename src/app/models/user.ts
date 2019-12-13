@@ -1,4 +1,5 @@
 export interface User {
+    displayName: string,
     email: string,
-    displayName: string
+    photoURL: string
 }
