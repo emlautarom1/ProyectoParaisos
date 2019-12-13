@@ -8,7 +8,7 @@ export class DateService {
   constructor() {
   }
 
-  getCurrentDate(format: string = 'DD-MM-YYYY'): String {
+  getCurrentDate(format: string = 'YYYY-MM-DD'): string {
     return moment().format(format);
   }
 }
