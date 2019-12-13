@@ -205,14 +205,18 @@ export class ObservationPage implements OnInit {
   }
 
   async onFinish() {
-    const form = this.form.value;
-    const pictures = this.pictures && this.pictures.length > 0
-      ? this.pictures.map(pic => pic.file)
-      : [];
+    if (!this.form.valid) {
+      await this.showToast('Complete el formulario para continuar.');
+      return;
+    }
     if (!this.authS.isAuthenticated) {
       await this.showToast('Inicia sesión para continuar');
       return;
     }
+    const form = this.form.value;
+    const pictures = this.pictures && this.pictures.length > 0
+      ? this.pictures.map(pic => pic.file)
+      : [];
     try {
       const loading = await this.showLoading();
 
