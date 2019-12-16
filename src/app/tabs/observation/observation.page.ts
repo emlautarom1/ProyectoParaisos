@@ -15,14 +15,10 @@ import { UploadService } from '@app/services/upload.service';
 import { AuthService } from '@app/services/auth.service';
 
 import { Name as TreeName } from '@app/models/tree';
+import { FormPicture } from '@app/models/form-picture';
 
 import { TreeNameComponent } from './tree-name/tree-name.component';
 import { AddCommentComponent } from './add-comment/add-comment.component';
-
-interface FormPicture {
-  file: File,
-  url: string
-}
 
 @Component({
   selector: 'app-observation',
@@ -153,9 +149,14 @@ export class ObservationPage implements OnInit {
   async onInputChange(files: FileList) {
     if (files && files.length) {
       const file = files[0];
-      const { photo, url } = await this.picS.compressFile(file);
+      const { photo, url } = await this.picS.processFileAsPicture(file);
       const uploadedPictures = this.pictures || [];
-      const newPicture: FormPicture = { file: photo.data, url };
+      const newPicture: FormPicture = {
+        data: photo.data,
+        orientation: photo.orientation,
+        name: file.name,
+        url: url
+      };
       this.pictures = [...uploadedPictures, newPicture];
     }
   }
@@ -223,20 +224,20 @@ export class ObservationPage implements OnInit {
     }
     const form = this.form.value;
     const pictures = this.pictures && this.pictures.length > 0
-      ? this.pictures.map(pic => pic.file)
+      ? this.pictures
       : [];
-    try {
-      const loading = await this.showLoading();
+    const loading = await this.showLoading();
 
+    try {
       const obs = this.formParser.formToObservation(form);
       await this.uploadS.uploadObservation(obs, pictures);
-
-      loading.dismiss();
-
       await this.showToast('Observación guardada exitosamente.')
       this.resetPage();
     } catch (error) {
+      console.error(error);
       await this.showToast('Se ha producido un error.');
+    } finally {
+      loading.dismiss();
     }
   }
 
