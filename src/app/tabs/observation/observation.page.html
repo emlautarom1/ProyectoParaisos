@@ -38,7 +38,7 @@
     <div id="prompt-or-selected-container">
       <div id="prompt-or-selected-picture">
         <div id="selected-picture" *ngIf="selectedPicture">
-          <img [src]="selectedPicture.b64">
+          <img [src]="selectedPicturePreview">
           <ion-icon class="delete-button delete-button-big" name="close" (click)="clearSelectedPicture()"></ion-icon>
         </div>
         <div id="picture-prompt" *ngIf="!selectedPicture" (click)="imginput.click()">
@@ -56,7 +56,7 @@
 
     <div id="taken-pictures-container">
       <span class="taken-picture" *ngFor="let picture of pictures">
-        <img [src]="picture.b64" alt="" (click)="onSelectedPicture(picture)">
+        <img [src]="getPicturePreview(picture)" alt="" (click)="onSelectedPicture(picture)">
         <ion-icon class="delete-button" name="close" (click)="deletePicture(picture)"></ion-icon>
       </span>
     </div>

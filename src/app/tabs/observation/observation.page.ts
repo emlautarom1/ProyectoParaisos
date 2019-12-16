@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
+
 import { LatLngLiteral } from '@agm/core';
 import { ModalController, ToastController, LoadingController } from '@ionic/angular';
 
@@ -8,6 +10,7 @@ import { GeolocationService } from '@app/services/geolocation.service';
 import { DateService } from '@app/services/date.service';
 import { FormValuesService } from '@app/services/observation/form-values.service';
 import { FormParserService } from "@app/services/observation/form-parser.service";
+import { PictureService } from '@app/services/picture.service';
 import { UploadService } from '@app/services/upload.service';
 import { AuthService } from '@app/services/auth.service';
 
@@ -18,7 +21,7 @@ import { AddCommentComponent } from './add-comment/add-comment.component';
 
 interface FormPicture {
   file: File,
-  b64: string
+  url: string
 }
 
 @Component({
@@ -46,6 +49,8 @@ export class ObservationPage implements OnInit {
     private formBuilder: FormBuilder,
     private formValues: FormValuesService,
     private formParser: FormParserService,
+    private picS: PictureService,
+    private sanitizer: DomSanitizer,
     private uploadS: UploadService,
     private authS: AuthService,
     private loadingCtrl: LoadingController,
@@ -129,6 +134,10 @@ export class ObservationPage implements OnInit {
     }
   }
 
+  get selectedPicturePreview() {
+    return this.getPicturePreview(this.selectedPicture);
+  }
+
   onGoBackClick() {
     if (this.currentStep !== 1) {
       this.currentStep--;
@@ -141,19 +150,18 @@ export class ObservationPage implements OnInit {
     }
   }
 
-  onInputChange(files: FileList) {
+  async onInputChange(files: FileList) {
     if (files && files.length) {
-      // TODO: Mover a un servicio de Fotos
-      const reader = new FileReader();
       const file = files[0];
-      reader.onload = (event: ProgressEvent) => {
-        const uploadedPictures = this.pictures || [];
-        const b64 = (event.target as any).result;
-        const newPicture: FormPicture = { file, b64 };
-        this.pictures = [...uploadedPictures, newPicture];
-      };
-      reader.readAsDataURL(file);
+      const { photo, url } = await this.picS.compressFile(file);
+      const uploadedPictures = this.pictures || [];
+      const newPicture: FormPicture = { file: photo.data, url };
+      this.pictures = [...uploadedPictures, newPicture];
     }
+  }
+
+  getPicturePreview(preview: FormPicture) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(preview.url);
   }
 
   onSelectedPicture(picture: FormPicture) {
