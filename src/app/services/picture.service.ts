@@ -12,10 +12,10 @@ export class PictureService {
 
   constructor() { }
 
-  async compressFile(file: File) {
+  async processFileAsPicture(file: File) {
+    // TODO: Add rotation?
     const conversions = await this.compress.compress([file]);
-    const { photo, info } = conversions[0];
-    console.log(info);
+    const { photo } = conversions[0];
     const url = URL.createObjectURL(photo.data);
     return { photo, url };
   }
