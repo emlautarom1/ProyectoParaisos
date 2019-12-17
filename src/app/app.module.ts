@@ -7,7 +7,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFirestoreModule } from "@angular/fire/firestore"
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { AgmCoreModule } from '@agm/core';

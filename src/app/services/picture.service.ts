@@ -7,8 +7,7 @@ import Compress from 'client-compress';
 export class PictureService {
   private compress = new Compress({
     quality: 0.80
-
-  })
+  });
 
   constructor() { }
 

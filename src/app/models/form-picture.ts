@@ -1,6 +1,6 @@
 export interface FormPicture {
-    data: Blob,
-    name: string,
-    orientation: number,
-    url: string
+    data: Blob;
+    name: string;
+    orientation: number;
+    url: string;
 }

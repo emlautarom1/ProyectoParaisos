@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormValuesService } from '@app/services/observation/form-values.service';
-import { Name as TreeName } from "@app/models/tree"
+import { Name as TreeName } from '@app/models/tree';
 import { ModalController } from '@ionic/angular';
 
 @Component({

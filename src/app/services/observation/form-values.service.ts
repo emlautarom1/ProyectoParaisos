@@ -15,7 +15,7 @@ export class FormValuesService {
       'Bueno',
       'Malo',
       'Muerto'
-    ]
+    ];
   }
 
   getAlturas(): string[] {
@@ -24,7 +24,7 @@ export class FormValuesService {
       '2 - 4m.',
       '4 - 10m.',
       'más de 10m.'
-    ]
+    ];
   }
 
   getFenologias(): string[] {
@@ -34,7 +34,7 @@ export class FormValuesService {
       'Follaje Completo',
       'Rebrote',
       'Fructificación',
-    ]
+    ];
   }
 
   getSintomas(): string[] {
@@ -43,7 +43,7 @@ export class FormValuesService {
       'Escoba de Brujas',
       'Reducción de Hojas',
       'Otros'
-    ]
+    ];
   }
 
   getNombresArbol(): TreeName[] {

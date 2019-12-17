@@ -9,7 +9,7 @@ import { User } from '@app/models/user';
 })
 export class AccountPage implements OnInit {
   loggedIn: boolean;
-  userDetails: User
+  userDetails: User;
 
   constructor(private auth: AuthService) { }
 
@@ -19,7 +19,7 @@ export class AccountPage implements OnInit {
       if (this.loggedIn) {
         this.updateUser();
       }
-    })
+    });
   }
 
   async updateUser() {

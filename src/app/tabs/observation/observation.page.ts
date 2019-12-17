@@ -9,7 +9,7 @@ import { NoNullValuesValidator } from '@app/utils/custom-validators';
 import { GeolocationService } from '@app/services/geolocation.service';
 import { DateService } from '@app/services/date.service';
 import { FormValuesService } from '@app/services/observation/form-values.service';
-import { FormParserService } from "@app/services/observation/form-parser.service";
+import { FormParserService } from '@app/services/observation/form-parser.service';
 import { PictureService } from '@app/services/picture.service';
 import { UploadService } from '@app/services/upload.service';
 import { AuthService } from '@app/services/auth.service';
@@ -36,7 +36,7 @@ export class ObservationPage implements OnInit {
   sanidades: string[];
 
   form: FormGroup;
-  pictures: FormPicture[]
+  pictures: FormPicture[];
   selectedPicture: FormPicture | null;
 
   constructor(
@@ -105,7 +105,7 @@ export class ObservationPage implements OnInit {
       podaCorrecta: false,
       taza: false,
       tutor: false,
-      comentario: ""
+      comentario: ''
     });
   }
 
@@ -155,7 +155,7 @@ export class ObservationPage implements OnInit {
         data: photo.data,
         orientation: photo.orientation,
         name: file.name,
-        url: url
+        url
       };
       this.pictures = [...uploadedPictures, newPicture];
     }
@@ -231,7 +231,7 @@ export class ObservationPage implements OnInit {
     try {
       const obs = this.formParser.formToObservation(form);
       await this.uploadS.uploadObservation(obs, pictures);
-      await this.showToast('Observación guardada exitosamente.')
+      await this.showToast('Observación guardada exitosamente.');
       this.resetPage();
     } catch (error) {
       console.error(error);
@@ -275,8 +275,8 @@ export class ObservationPage implements OnInit {
       podaCorrecta: false,
       taza: false,
       tutor: false,
-      comentario: ""
-    })
+      comentario: ''
+    });
     this.form.markAsUntouched();
     this.pictures = [];
     this.selectedPicture = null;
