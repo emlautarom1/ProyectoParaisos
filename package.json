@@ -9,7 +9,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "deploy": "npm run lint && npm run build --prod && firebase deploy"
   },
   "private": true,
   "dependencies": {
@@ -23,10 +24,10 @@
     "@angular/pwa": "^0.803.17",
     "@angular/router": "~8.1.2",
     "@angular/service-worker": "~8.1.2",
-    "@ionic/angular": "^4.7.1",
+    "@ionic/angular": "^4.11.7",
     "client-compress": "^2.1.2",
     "core-js": "^2.5.4",
-    "firebase": "^7.5.0",
+    "firebase": "^7.6.0",
     "moment": "^2.24.0",
     "rxjs": "~6.5.1",
     "tslib": "^1.9.0",
