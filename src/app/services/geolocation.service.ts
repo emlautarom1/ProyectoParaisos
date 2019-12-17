@@ -11,7 +11,7 @@ export class GeolocationService {
 
   constructor(private geocoder: AgmGeocoder) {
     if ('geolocation' in navigator) {
-      this.position = Observable.create((observer: any) => {
+      this.position = new Observable((observer: any) => {
         const watchId = window.navigator.geolocation.watchPosition(
           function success(pos) {
             observer.next(pos);
