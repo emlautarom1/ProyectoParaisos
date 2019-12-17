@@ -3,7 +3,7 @@ export interface Tree {
     diametro: number;
     fenologia: string[];
     nombre: Name;
-    podaCorrecta: string;
+    poda: string;
     sanidad: string;
     sintomas: string[];
     taza: boolean;

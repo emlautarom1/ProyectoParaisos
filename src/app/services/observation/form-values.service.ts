@@ -18,6 +18,15 @@ export class FormValuesService {
     ];
   }
 
+  getPodas(): string[] {
+    return [
+      'Correcta',
+      'Incorrecta',
+      'Necesita',
+      'Interferencia con Cableado'
+    ];
+  }
+
   getAlturas(): string[] {
     return [
       '0 - 2m.',
@@ -34,6 +43,7 @@ export class FormValuesService {
       'Follaje Completo',
       'Rebrote',
       'Fructificación',
+      'Sin Datos',
     ];
   }
 

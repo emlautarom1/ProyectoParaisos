@@ -34,6 +34,7 @@ export class ObservationPage implements OnInit {
   fenologias: string[];
   sintomas: string[];
   sanidades: string[];
+  podas: string[];
 
   form: FormGroup;
   pictures: FormPicture[];
@@ -59,6 +60,7 @@ export class ObservationPage implements OnInit {
     this.alturas = this.formValues.getAlturas();
     this.fenologias = this.formValues.getFenologias();
     this.sintomas = this.formValues.getSintomas();
+    this.podas = this.formValues.getPodas();
 
     this.form = this.buildForm();
 
@@ -102,7 +104,7 @@ export class ObservationPage implements OnInit {
       ],
       sintomas: [],
       sanidad: [null, Validators.required],
-      podaCorrecta: false,
+      poda: [null, Validators.required],
       taza: false,
       tutor: false,
       comentario: ''
@@ -272,7 +274,7 @@ export class ObservationPage implements OnInit {
       fenologia: [],
       sintomas: [],
       sanidad: null,
-      podaCorrecta: false,
+      poda: null,
       taza: false,
       tutor: false,
       comentario: ''

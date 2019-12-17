@@ -95,7 +95,7 @@
 
         <ion-item lines="inset">
           <ion-label position="floating">
-            Diámetro
+            Diámetro (cm)
           </ion-label>
           <ion-input type="number" formControlName="diametro"></ion-input>
         </ion-item>
@@ -138,14 +138,16 @@
 
         <ion-item lines="inset">
           <ion-label>
-            Poda Correcta
+            Poda
           </ion-label>
-          <ion-checkbox slot="end" formControlName="podaCorrecta"></ion-checkbox>
+          <ion-select cancel-text="Cancelar" ok-text="Ok" formControlName="poda">
+            <ion-select-option *ngFor="let pod of podas">{{ pod }}</ion-select-option>
+          </ion-select>
         </ion-item>
 
         <ion-item lines="inset">
           <ion-label>
-            Taza del Ejemplar
+            Taza Apropiada
           </ion-label>
           <ion-checkbox slot="end" formControlName="taza"></ion-checkbox>
         </ion-item>
