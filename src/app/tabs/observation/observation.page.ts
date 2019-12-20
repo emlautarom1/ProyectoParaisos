@@ -185,10 +185,7 @@ export class ObservationPage implements OnInit {
 
   async showNameModal() {
     const modal = await this.modalCtrl.create({
-      component: TreeNameComponent,
-      componentProps: {
-        modalCtrl: this.modalCtrl
-      }
+      component: TreeNameComponent
     });
     await modal.present();
     const { data } = await modal.onWillDismiss();
@@ -203,7 +200,6 @@ export class ObservationPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: AddCommentComponent,
       componentProps: {
-        modalCtrl: this.modalCtrl,
         comentario: currentComment
       }
     });

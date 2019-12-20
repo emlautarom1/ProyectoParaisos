@@ -7,10 +7,9 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./add-comment.component.scss'],
 })
 export class AddCommentComponent implements OnInit {
-  @Input() modalCtrl: ModalController;
   @Input() comentario: string;
 
-  constructor() { }
+  constructor(private modalCtrl: ModalController) { }
 
   ngOnInit() { }
 
