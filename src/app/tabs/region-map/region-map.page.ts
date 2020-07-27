@@ -12,4 +12,11 @@ export class RegionMapPage implements OnInit {
   ngOnInit() {
   }
 
+  onDownload() {
+    console.log('Descargando datos...');
+  }
+
+  onFilterOptions() {
+    console.log('Abriendo opciones de filtro...');
+  }
 }

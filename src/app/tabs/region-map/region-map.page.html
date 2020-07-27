@@ -1,9 +1,20 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Mapa de Observaciones</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="onDownload()">
+        <ion-icon slot="icon-only" name="cloud-download-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <app-under-construction></app-under-construction>
+<ion-content>
+  <agm-map mapTypeId="hybrid" style="height: 100%" disableDefaultUI="true">
+  </agm-map>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="onFilterOptions()">
+      <ion-icon name="options"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
