@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, HostListener } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -6,18 +6,27 @@ import { ModalController } from '@ionic/angular';
   templateUrl: './add-comment.component.html',
   styleUrls: ['./add-comment.component.scss'],
 })
-export class AddCommentComponent implements OnInit {
+export class AddCommentComponent implements OnInit, OnDestroy {
   @Input() comentario: string;
 
   constructor(private modalCtrl: ModalController) { }
 
-  ngOnInit() { }
-
-  cancelOperation() {
-    this.modalCtrl.dismiss();
+  ngOnInit() {
+    history.pushState({ modal: true }, null);
   }
 
   saveComment() {
     this.modalCtrl.dismiss(this.comentario);
+  }
+
+  @HostListener("window:popstate", ["$event"])
+  cancelOperation() {
+    this.modalCtrl.dismiss();
+  }
+
+  ngOnDestroy() {
+    if (history.state.modal) {
+      history.back();
+    }
   }
 }
