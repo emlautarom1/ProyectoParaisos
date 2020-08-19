@@ -19,8 +19,8 @@ export class TreeNameComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.names = this.values.getNombresArbol();
     history.pushState({ modal: true }, null);
+    this.names = this.values.getNombresArbol();
   }
 
   ngOnDestroy() {
