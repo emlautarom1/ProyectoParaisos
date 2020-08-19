@@ -31,9 +31,9 @@ export class FormDataService {
       }, NoNullValuesValidator],
       diametro: [null, [
         Validators.required,
-        Validators.pattern("^[0-9]*(.[0-9]+)?$")
+        Validators.pattern('^[0-9]*(.[0-9]+)?$')
       ]],
-      altura: [null, Validators.required,],
+      altura: [null, Validators.required],
       fenologia: [[], [
         Validators.required,
         Validators.minLength(1)
@@ -43,7 +43,7 @@ export class FormDataService {
       poda: [null, Validators.required],
       taza: false,
       tutor: false,
-      comentario: ""
+      comentario: ''
     });
   }
 

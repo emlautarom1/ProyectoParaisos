@@ -19,7 +19,7 @@ export class AddCommentComponent implements OnInit, OnDestroy {
     this.modalCtrl.dismiss(this.comment);
   }
 
-  @HostListener("window:popstate")
+  @HostListener('window:popstate')
   cancelOperation() {
     this.modalCtrl.dismiss();
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
 
 import { Name as TreeName } from '@app/models/tree';
@@ -9,7 +9,7 @@ import { FormValuesService } from '@app/services/observation/form-values.service
   templateUrl: './tree-name.component.html',
   styleUrls: ['./tree-name.component.scss'],
 })
-export class TreeNameComponent implements OnInit {
+export class TreeNameComponent implements OnInit, OnDestroy {
   names: TreeName[];
 
   constructor(
@@ -29,7 +29,7 @@ export class TreeNameComponent implements OnInit {
     }
   }
 
-  @HostListener("window:popstate")
+  @HostListener('window:popstate')
   cancelSelection() {
     this.modalCtrl.dismiss();
   }

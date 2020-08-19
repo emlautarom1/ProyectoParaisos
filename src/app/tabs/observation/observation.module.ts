@@ -20,11 +20,11 @@ const routes: Routes = [
     component: CurrentLocationComponent,
   },
   {
-    path: "tree-pictures",
+    path: 'tree-pictures',
     component: TreePicturesComponent,
   },
   {
-    path: "details-form",
+    path: 'details-form',
     component: DetailsFormComponent,
   },
   {

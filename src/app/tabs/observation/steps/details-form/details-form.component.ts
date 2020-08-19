@@ -50,10 +50,6 @@ export class DetailsFormComponent implements OnInit {
     this.podas = this.valuesService.getPodas();
   }
 
-  onNavClick() {
-    console.log("CLICKED")
-  }
-
   get form() {
     return this.dataService.form;
   }
@@ -120,7 +116,7 @@ export class DetailsFormComponent implements OnInit {
       await this.showToast('Observación guardada exitosamente.');
 
       this.dataService.resetData();
-      this.router.navigate(["../current-location"], { relativeTo: this.route });
+      this.router.navigate(['../current-location'], { relativeTo: this.route });
     } catch (error) {
       console.error(error);
       await this.showToast('Se ha producido un error.');
