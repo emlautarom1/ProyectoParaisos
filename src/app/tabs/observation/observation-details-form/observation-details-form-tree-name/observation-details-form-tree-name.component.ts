@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
 
 import { Name as TreeName } from '@app/models/tree';
@@ -9,7 +9,7 @@ import { ObservationService } from '@app/services/observation.service';
   templateUrl: './observation-details-form-tree-name.component.html',
   styleUrls: ['./observation-details-form-tree-name.component.scss'],
 })
-export class ObservationDetailsFormTreeNameComponent implements OnInit {
+export class ObservationDetailsFormTreeNameComponent implements OnInit, OnDestroy {
   names: TreeName[];
 
   constructor(

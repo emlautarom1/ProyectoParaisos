@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, HostListener } from '@angular/core';
+import { Component, OnInit, Input, HostListener, OnDestroy } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -6,7 +6,7 @@ import { ModalController } from '@ionic/angular';
   templateUrl: './observation-details-form-add-comment.component.html',
   styleUrls: ['./observation-details-form-add-comment.component.scss'],
 })
-export class ObservationDetailsFormAddCommentComponent implements OnInit {
+export class ObservationDetailsFormAddCommentComponent implements OnInit, OnDestroy {
   @Input() comment: string;
 
   constructor(private modalCtrl: ModalController) { }
