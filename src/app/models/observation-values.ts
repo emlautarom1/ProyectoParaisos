@@ -5,5 +5,6 @@ export interface ObservationValues {
     podas: string[],
     alturas: string[],
     fenologias: string[],
+    sintomas: string[],
     nombres: TreeName[]
 }
