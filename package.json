@@ -2,7 +2,7 @@
   "name": "proyecto-paraisos",
   "version": "0.0.1",
   "author": "Emanuel Lautaro Martin",
-  "homepage": "TODO",
+  "homepage": "https://github.com/emlautarom1/ProyectoParaisos",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
