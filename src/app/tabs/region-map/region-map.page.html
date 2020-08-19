@@ -10,7 +10,8 @@
 </ion-header>
 
 <ion-content>
-  <agm-map mapTypeId="hybrid" style="height: 100%" disableDefaultUI="true">
+  <agm-map [latitude]="unslCoords.lat" [longitude]="unslCoords.lng" [zoom]="16" disableDefaultUI="true"
+    mapTypeId="satellite" style="height: 100%">
   </agm-map>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="onFilterOptions()">

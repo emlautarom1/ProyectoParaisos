@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { AgmCoreModule } from '@agm/core';
 
 import { RegionMapPage } from './region-map.page';
+import { RegionMapSettingsComponent } from './region-map-settings/region-map-settings.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,12 @@ const routes: Routes = [
     AgmCoreModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [RegionMapPage]
+  declarations: [
+    RegionMapPage,
+    RegionMapSettingsComponent
+  ],
+  entryComponents: [
+    RegionMapSettingsComponent
+  ]
 })
 export class RegionMapPageModule { }
