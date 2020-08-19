@@ -7,7 +7,7 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./add-comment.component.scss'],
 })
 export class AddCommentComponent implements OnInit, OnDestroy {
-  @Input() comentario: string;
+  @Input() comment: string;
 
   constructor(private modalCtrl: ModalController) { }
 
@@ -16,10 +16,10 @@ export class AddCommentComponent implements OnInit, OnDestroy {
   }
 
   saveComment() {
-    this.modalCtrl.dismiss(this.comentario);
+    this.modalCtrl.dismiss(this.comment);
   }
 
-  @HostListener("window:popstate", ["$event"])
+  @HostListener("window:popstate")
   cancelOperation() {
     this.modalCtrl.dismiss();
   }

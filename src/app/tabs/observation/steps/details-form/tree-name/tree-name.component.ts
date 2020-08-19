@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormValuesService } from '@app/services/observation/form-values.service';
-import { Name as TreeName } from '@app/models/tree';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
+
+import { Name as TreeName } from '@app/models/tree';
+import { FormValuesService } from '@app/services/observation/form-values.service';
 
 @Component({
   selector: 'app-tree-name',
@@ -9,7 +10,6 @@ import { ModalController, AlertController } from '@ionic/angular';
   styleUrls: ['./tree-name.component.scss'],
 })
 export class TreeNameComponent implements OnInit {
-
   names: TreeName[];
 
   constructor(
@@ -20,8 +20,16 @@ export class TreeNameComponent implements OnInit {
 
   ngOnInit() {
     this.names = this.values.getNombresArbol();
+    history.pushState({ modal: true }, null);
   }
 
+  ngOnDestroy() {
+    if (history.state.modal) {
+      history.back();
+    }
+  }
+
+  @HostListener("window:popstate")
   cancelSelection() {
     this.modalCtrl.dismiss();
   }
@@ -56,7 +64,6 @@ export class TreeNameComponent implements OnInit {
         }
       ]
     });
-
     await alert.present();
   }
 

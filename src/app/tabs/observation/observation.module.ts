@@ -4,18 +4,32 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
-
 import { AgmCoreModule } from '@agm/core';
 
-import { ObservationPage } from './observation.page';
-import { TreeNameComponent } from './tree-name/tree-name.component';
-import { GeolocationService } from 'src/app/services/geolocation.service';
-import { AddCommentComponent } from './add-comment/add-comment.component';
+import { CurrentLocationComponent } from './steps/current-location/current-location.component';
+import { TreePicturesComponent } from './steps/tree-pictures/tree-pictures.component';
+import { DetailsFormComponent } from './steps/details-form/details-form.component';
+import { TreeNameComponent } from './steps/details-form/tree-name/tree-name.component';
+import { AddCommentComponent } from './steps/details-form/add-comment/add-comment.component';
+
+import { FormDataService } from '@app/services/observation/form-data.service';
 
 const routes: Routes = [
   {
+    path: 'current-location',
+    component: CurrentLocationComponent,
+  },
+  {
+    path: "tree-pictures",
+    component: TreePicturesComponent,
+  },
+  {
+    path: "details-form",
+    component: DetailsFormComponent,
+  },
+  {
     path: '',
-    component: ObservationPage
+    redirectTo: 'current-location'
   }
 ];
 
@@ -26,17 +40,19 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     AgmCoreModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
   ],
   declarations: [
+    CurrentLocationComponent,
+    TreePicturesComponent,
+    DetailsFormComponent,
     TreeNameComponent,
     AddCommentComponent,
-    ObservationPage
   ],
   entryComponents: [
     TreeNameComponent,
     AddCommentComponent
   ],
-  providers: [GeolocationService]
+  providers: [FormDataService]
 })
 export class ObservationPageModule { }

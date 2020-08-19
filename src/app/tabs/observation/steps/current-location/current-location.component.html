@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Tu ubicación actual</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button routerLink="../tree-pictures">
+        <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="map-spinner-container" *ngIf="!coords">
+    <ion-spinner></ion-spinner>
+    <p>Cargando ubicación</p>
+  </div>
+  <agm-map *ngIf="coords" [latitude]="coords.lat" [longitude]="coords.lng" [zoom]="20" disableDefaultUI="true"
+    mapTypeId="hybrid" style="height: 100%">
+    <agm-marker [latitude]="coords.lat" [longitude]="coords.lng">
+    </agm-marker>
+  </agm-map>
+</ion-content>
