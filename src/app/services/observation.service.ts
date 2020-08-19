@@ -3,7 +3,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { NoNullValuesValidator } from '@app/utils/custom-validators';
 import { DateService } from './date.service';
 import { ObservationValues } from '@app/models/observation-values';
-import * as values from "@app/models/observation-values.json"
+import * as values from '@app/models/observation-values.json';
 import { FormPicture } from '@app/models/form-picture';
 import { Observation } from '@app/models/observation';
 
