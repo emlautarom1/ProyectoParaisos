@@ -2,16 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ModalController, LoadingController, ToastController } from '@ionic/angular';
 
-import { FormDataService } from '@app/services/observation/form-data.service';
-import { FormParserService } from '@app/services/observation/form-parser.service';
-import { FormValuesService } from '@app/services/observation/form-values.service';
 import { AuthService } from '@app/services/auth.service';
 import { UploadService } from '@app/services/upload.service';
+import { ObservationService } from "@app/services/observation.service";
 
 import { Name as TreeName } from '@app/models/tree';
 
 import { TreeNameComponent } from './tree-name/tree-name.component';
 import { AddCommentComponent } from './add-comment/add-comment.component';
+import { ObservationValues } from '@app/models/observation-values';
+
 
 
 @Component({
@@ -20,17 +20,10 @@ import { AddCommentComponent } from './add-comment/add-comment.component';
   styleUrls: ['./details-form.component.scss'],
 })
 export class DetailsFormComponent implements OnInit {
-  alturas: string[];
-  fenologias: string[];
-  sintomas: string[];
-  sanidades: string[];
-  podas: string[];
+  enumValues: ObservationValues;
 
   constructor(
-    private dataService: FormDataService,
-    private valuesService: FormValuesService,
-    private parserService: FormParserService,
-
+    private obsService: ObservationService,
     private authService: AuthService,
     private uploadService: UploadService,
 
@@ -43,19 +36,15 @@ export class DetailsFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.sanidades = this.valuesService.getSanidades();
-    this.alturas = this.valuesService.getAlturas();
-    this.fenologias = this.valuesService.getFenologias();
-    this.sintomas = this.valuesService.getSintomas();
-    this.podas = this.valuesService.getPodas();
+    this.enumValues = this.obsService.enumValues;
   }
 
   get form() {
-    return this.dataService.form;
+    return this.obsService.form;
   }
 
   get pictures() {
-    return this.dataService.pictures;
+    return this.obsService.pictures;
   }
 
   get direccion(): string {
@@ -111,11 +100,11 @@ export class DetailsFormComponent implements OnInit {
     const saving = await this.showSaving();
 
     try {
-      const obs = this.parserService.formToObservation(this.form.value);
+      const obs = this.obsService.formToObservation(this.form.value);
       await this.uploadService.uploadObservation(obs, pictures);
       await this.showToast('Observación guardada exitosamente.');
 
-      this.dataService.resetData();
+      this.obsService.resetObservation();
       this.router.navigate(['../current-location'], { relativeTo: this.route });
     } catch (error) {
       console.error(error);

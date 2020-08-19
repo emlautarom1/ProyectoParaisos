@@ -56,7 +56,7 @@
           Altura
         </ion-label>
         <ion-select cancel-text="Cancelar" ok-text="Ok" formControlName="altura">
-          <ion-select-option *ngFor="let altura of alturas">{{ altura }}</ion-select-option>
+          <ion-select-option *ngFor="let e of enumValues.alturas">{{ e }}</ion-select-option>
         </ion-select>
       </ion-item>
 
@@ -65,7 +65,7 @@
           Fenología
         </ion-label>
         <ion-select multiple cancel-text="Cancelar" ok-text="Ok" formControlName="fenologia">
-          <ion-select-option *ngFor="let fen of fenologias">{{ fen }}</ion-select-option>
+          <ion-select-option *ngFor="let e of enumValues.fenologias">{{ e }}</ion-select-option>
         </ion-select>
       </ion-item>
 
@@ -74,7 +74,7 @@
           Síntomas
         </ion-label>
         <ion-select multiple cancel-text="Cancelar" ok-text="Ok" formControlName="sintomas">
-          <ion-select-option *ngFor="let sint of sintomas">{{ sint }}</ion-select-option>
+          <ion-select-option *ngFor="let e of enumValues.sintomas">{{ e }}</ion-select-option>
         </ion-select>
       </ion-item>
 
@@ -83,7 +83,7 @@
           Sanidad
         </ion-label>
         <ion-select cancel-text="Cancelar" ok-text="Ok" formControlName="sanidad">
-          <ion-select-option *ngFor="let san of sanidades">{{ san }}</ion-select-option>
+          <ion-select-option *ngFor="let e of enumValues.sanidades">{{ e }}</ion-select-option>
         </ion-select>
       </ion-item>
 
@@ -92,7 +92,7 @@
           Poda
         </ion-label>
         <ion-select cancel-text="Cancelar" ok-text="Ok" formControlName="poda">
-          <ion-select-option *ngFor="let pod of podas">{{ pod }}</ion-select-option>
+          <ion-select-option *ngFor="let e of enumValues.podas">{{ e }}</ion-select-option>
         </ion-select>
       </ion-item>
 

@@ -12,7 +12,7 @@ import { DetailsFormComponent } from './steps/details-form/details-form.componen
 import { TreeNameComponent } from './steps/details-form/tree-name/tree-name.component';
 import { AddCommentComponent } from './steps/details-form/add-comment/add-comment.component';
 
-import { FormDataService } from '@app/services/observation/form-data.service';
+import { ObservationService } from '@app/services/observation.service';
 
 const routes: Routes = [
   {
@@ -53,6 +53,6 @@ const routes: Routes = [
     TreeNameComponent,
     AddCommentComponent
   ],
-  providers: [FormDataService]
+  providers: [ObservationService]
 })
 export class ObservationPageModule { }

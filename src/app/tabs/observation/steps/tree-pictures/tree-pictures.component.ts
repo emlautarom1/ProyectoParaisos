@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { FormPicture } from '@app/models/form-picture';
-import { FormDataService } from '@app/services/observation/form-data.service';
 import { PictureService } from '@app/services/picture.service';
+import { ObservationService } from '@app/services/observation.service';
 
 @Component({
   selector: 'app-tree-pictures',
@@ -14,17 +14,17 @@ export class TreePicturesComponent {
   selectedPicture: FormPicture | null;
 
   constructor(
-    private formService: FormDataService,
+    private obsService: ObservationService,
     private pictureService: PictureService,
     private sanitizer: DomSanitizer,
   ) { }
 
   get pictures(): FormPicture[] {
-    return this.formService.pictures;
+    return this.obsService.pictures;
   }
 
   set pictures(newPictures: FormPicture[]) {
-    this.formService.pictures = newPictures;
+    this.obsService.pictures = newPictures;
   }
 
   get selectedPicturePreview() {

@@ -2,7 +2,7 @@ import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
 
 import { Name as TreeName } from '@app/models/tree';
-import { FormValuesService } from '@app/services/observation/form-values.service';
+import { ObservationService } from '@app/services/observation.service';
 
 @Component({
   selector: 'app-tree-name',
@@ -10,17 +10,17 @@ import { FormValuesService } from '@app/services/observation/form-values.service
   styleUrls: ['./tree-name.component.scss'],
 })
 export class TreeNameComponent implements OnInit, OnDestroy {
-  names: TreeName[];
+  nombres: TreeName[];
 
   constructor(
-    private values: FormValuesService,
+    private obsService: ObservationService,
     private modalCtrl: ModalController,
     private alertCtrl: AlertController
   ) { }
 
   ngOnInit() {
     history.pushState({ modal: true }, null);
-    this.names = this.values.getNombresArbol();
+    this.nombres = this.obsService.enumValues.nombres;
   }
 
   ngOnDestroy() {
