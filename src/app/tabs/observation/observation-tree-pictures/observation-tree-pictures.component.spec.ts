@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { CurrentLocationComponent } from './current-location.component';
+import { ObservationTreePicturesComponent } from './observation-tree-pictures.component';
 
-describe('CurrentLocationComponent', () => {
-  let component: CurrentLocationComponent;
-  let fixture: ComponentFixture<CurrentLocationComponent>;
+describe('ObservationTreePicturesComponent', () => {
+  let component: ObservationTreePicturesComponent;
+  let fixture: ComponentFixture<ObservationTreePicturesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CurrentLocationComponent ],
+      declarations: [ ObservationTreePicturesComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CurrentLocationComponent);
+    fixture = TestBed.createComponent(ObservationTreePicturesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

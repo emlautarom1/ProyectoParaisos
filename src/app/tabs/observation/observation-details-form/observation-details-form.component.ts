@@ -1,25 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ModalController, LoadingController, ToastController } from '@ionic/angular';
+import { ModalController, ToastController, LoadingController } from '@ionic/angular';
 
-import { AuthService } from '@app/services/auth.service';
-import { UploadService } from '@app/services/upload.service';
-import { ObservationService } from "@app/services/observation.service";
-
+import { ObservationValues } from '@app/models/observation-values';
 import { Name as TreeName } from '@app/models/tree';
 
-import { TreeNameComponent } from './tree-name/tree-name.component';
-import { AddCommentComponent } from './add-comment/add-comment.component';
-import { ObservationValues } from '@app/models/observation-values';
+import { ObservationService } from '@app/services/observation.service';
+import { AuthService } from '@app/services/auth.service';
+import { UploadService } from '@app/services/upload.service';
 
-
+import { ObservationDetailsFormTreeNameComponent } from './observation-details-form-tree-name/observation-details-form-tree-name.component';
+import { ObservationDetailsFormAddCommentComponent } from './observation-details-form-add-comment/observation-details-form-add-comment.component';
 
 @Component({
-  selector: 'app-details-form',
-  templateUrl: './details-form.component.html',
-  styleUrls: ['./details-form.component.scss'],
+  selector: 'app-observation-details-form',
+  templateUrl: './observation-details-form.component.html',
+  styleUrls: ['./observation-details-form.component.scss'],
 })
-export class DetailsFormComponent implements OnInit {
+export class ObservationDetailsFormComponent implements OnInit {
   enumValues: ObservationValues;
 
   constructor(
@@ -57,7 +55,7 @@ export class DetailsFormComponent implements OnInit {
 
   async showNameModal() {
     const modal = await this.modalCtrl.create({
-      component: TreeNameComponent
+      component: ObservationDetailsFormTreeNameComponent
     });
     await modal.present();
     const { data } = await modal.onWillDismiss();
@@ -70,7 +68,7 @@ export class DetailsFormComponent implements OnInit {
     const currentComment = this.form.get('comentario').value;
 
     const modal = await this.modalCtrl.create({
-      component: AddCommentComponent,
+      component: ObservationDetailsFormAddCommentComponent,
       componentProps: {
         comentario: currentComment
       }

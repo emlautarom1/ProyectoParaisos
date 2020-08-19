@@ -1,16 +1,15 @@
 import { Component } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-
-import { FormPicture } from '@app/models/form-picture';
-import { PictureService } from '@app/services/picture.service';
 import { ObservationService } from '@app/services/observation.service';
+import { PictureService } from '@app/services/picture.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { FormPicture } from '@app/models/form-picture';
 
 @Component({
-  selector: 'app-tree-pictures',
-  templateUrl: './tree-pictures.component.html',
-  styleUrls: ['./tree-pictures.component.scss'],
+  selector: 'app-observation-tree-pictures',
+  templateUrl: './observation-tree-pictures.component.html',
+  styleUrls: ['./observation-tree-pictures.component.scss'],
 })
-export class TreePicturesComponent {
+export class ObservationTreePicturesComponent {
   selectedPicture: FormPicture | null;
 
   constructor(
@@ -65,4 +64,5 @@ export class TreePicturesComponent {
     }
     this.pictures = pictures;
   }
+
 }

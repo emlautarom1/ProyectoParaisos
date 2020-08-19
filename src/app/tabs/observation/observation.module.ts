@@ -6,26 +6,25 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { AgmCoreModule } from '@agm/core';
 
-import { CurrentLocationComponent } from './steps/current-location/current-location.component';
-import { TreePicturesComponent } from './steps/tree-pictures/tree-pictures.component';
-import { DetailsFormComponent } from './steps/details-form/details-form.component';
-import { TreeNameComponent } from './steps/details-form/tree-name/tree-name.component';
-import { AddCommentComponent } from './steps/details-form/add-comment/add-comment.component';
-
 import { ObservationService } from '@app/services/observation.service';
+import { ObservationCurrentLocationComponent } from './observation-current-location/observation-current-location.component';
+import { ObservationTreePicturesComponent } from './observation-tree-pictures/observation-tree-pictures.component';
+import { ObservationDetailsFormAddCommentComponent } from './observation-details-form/observation-details-form-add-comment/observation-details-form-add-comment.component';
+import { ObservationDetailsFormComponent } from './observation-details-form/observation-details-form.component';
+import { ObservationDetailsFormTreeNameComponent } from './observation-details-form/observation-details-form-tree-name/observation-details-form-tree-name.component';
 
 const routes: Routes = [
   {
     path: 'current-location',
-    component: CurrentLocationComponent,
+    component: ObservationCurrentLocationComponent,
   },
   {
     path: 'tree-pictures',
-    component: TreePicturesComponent,
+    component: ObservationTreePicturesComponent,
   },
   {
     path: 'details-form',
-    component: DetailsFormComponent,
+    component: ObservationDetailsFormComponent,
   },
   {
     path: '',
@@ -43,15 +42,15 @@ const routes: Routes = [
     RouterModule.forChild(routes),
   ],
   declarations: [
-    CurrentLocationComponent,
-    TreePicturesComponent,
-    DetailsFormComponent,
-    TreeNameComponent,
-    AddCommentComponent,
+    ObservationCurrentLocationComponent,
+    ObservationTreePicturesComponent,
+    ObservationDetailsFormComponent,
+    ObservationDetailsFormTreeNameComponent,
+    ObservationDetailsFormAddCommentComponent,
   ],
   entryComponents: [
-    TreeNameComponent,
-    AddCommentComponent
+    ObservationDetailsFormTreeNameComponent,
+    ObservationDetailsFormAddCommentComponent,
   ],
   providers: [ObservationService]
 })

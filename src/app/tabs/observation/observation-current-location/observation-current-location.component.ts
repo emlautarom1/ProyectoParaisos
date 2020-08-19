@@ -1,22 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ObservationService } from '@app/services/observation.service';
+import { GeolocationService } from '@app/services/geolocation.service';
 import { LatLngLiteral } from '@agm/core';
 
-import { GeolocationService } from '@app/services/geolocation.service';
-import { ObservationService } from '@app/services/observation.service';
-
 @Component({
-  selector: 'app-current-location',
-  templateUrl: './current-location.component.html',
-  styleUrls: ['./current-location.component.scss'],
+  selector: 'app-observation-current-location',
+  templateUrl: './observation-current-location.component.html',
+  styleUrls: ['./observation-current-location.component.scss'],
 })
-export class CurrentLocationComponent implements OnInit {
+export class ObservationCurrentLocationComponent implements OnInit, OnDestroy {
   constructor(
     private obsService: ObservationService,
     private geoService: GeolocationService
   ) { }
 
   ngOnInit() {
-    // TODO: Add unsuscribe to onDestroy
     this.geoService.watchLocation().subscribe((pos: Position) => {
       const { latitude: lat, longitude: lng } = pos.coords;
       const coords = { lat, lng };
@@ -27,6 +25,10 @@ export class CurrentLocationComponent implements OnInit {
           this.obsService.form.patchValue({ direccion: addr });
         });
     });
+  }
+
+  ngOnDestroy() {
+    // TODO: Add unsuscribe to onDestroy
   }
 
   get coords(): LatLngLiteral {
