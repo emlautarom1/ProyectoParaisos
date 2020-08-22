@@ -8,7 +8,8 @@ import { IonicModule } from '@ionic/angular';
 import { AgmCoreModule } from '@agm/core';
 
 import { RegionMapPage } from './region-map.page';
-import { RegionMapSettingsComponent } from './region-map-settings/region-map-settings.component';
+import { RepositoryService } from '@app/services/repository.service';
+import { RegionMapObservationDetailsComponent } from './region-map-observation-details/region-map-observation-details.component';
 
 const routes: Routes = [
   {
@@ -27,10 +28,13 @@ const routes: Routes = [
   ],
   declarations: [
     RegionMapPage,
-    RegionMapSettingsComponent
+    RegionMapObservationDetailsComponent,
+  ],
+  providers: [
+    RepositoryService,
   ],
   entryComponents: [
-    RegionMapSettingsComponent
+    RegionMapObservationDetailsComponent,
   ]
 })
 export class RegionMapPageModule { }
