@@ -6,8 +6,6 @@ export interface Tree {
     poda: string;
     sanidad: string;
     sintomas: string[];
-    taza: boolean;
-    tutor: boolean;
 }
 
 export interface Name {
