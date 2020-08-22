@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ObservationService } from '@app/services/observation.service';
-import { GeolocationService } from '@app/services/geolocation.service';
+import { Component, OnInit, HostListener, Input, OnDestroy } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+
 import { LatLngLiteral } from '@agm/core';
+
 
 @Component({
   selector: 'app-observation-current-location',
@@ -9,29 +10,24 @@ import { LatLngLiteral } from '@agm/core';
   styleUrls: ['./observation-current-location.component.scss'],
 })
 export class ObservationCurrentLocationComponent implements OnInit, OnDestroy {
+  @Input() coords: LatLngLiteral;
+
   constructor(
-    private obsService: ObservationService,
-    private geoService: GeolocationService
+    private modalCtrl: ModalController,
   ) { }
 
   ngOnInit() {
-    this.geoService.watchLocation().subscribe((pos: Position) => {
-      const { latitude: lat, longitude: lng } = pos.coords;
-      const coords = { lat, lng };
-
-      this.obsService.form.patchValue({ coords });
-      this.geoService.latLngToAddress(lat, lng)
-        .subscribe(addr => {
-          this.obsService.form.patchValue({ direccion: addr });
-        });
-    });
+    history.pushState({ modal: true }, null);
   }
 
   ngOnDestroy() {
-    // TODO: Add unsuscribe to onDestroy
+    if (history.state.modal) {
+      history.back();
+    }
   }
 
-  get coords(): LatLngLiteral {
-    return this.obsService.form.get('coords').value;
+  @HostListener('window:popstate')
+  onReturn() {
+    this.modalCtrl.dismiss();
   }
 }

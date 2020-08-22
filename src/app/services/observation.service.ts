@@ -4,22 +4,23 @@ import { NoNullValuesValidator } from '@app/utils/custom-validators';
 import { DateService } from './date.service';
 import { ObservationValues } from '@app/models/observation-values';
 import * as values from '@app/models/observation-values.json';
-import { FormPicture } from '@app/models/form-picture';
 import { Observation } from '@app/models/observation';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ObservationService {
-  public pictures: FormPicture[];
-  public form: FormGroup;
-
   constructor(
     private formBuilder: FormBuilder,
     private dateService: DateService,
-  ) {
-    this.pictures = [];
-    this.form = this.formBuilder.group({
+  ) { }
+
+  getObservationEnumValues(): ObservationValues {
+    return (values as any).default;
+  }
+
+  public buildObservationForm(): FormGroup {
+    return this.formBuilder.group({
       fecha: this.dateService.getCurrentDate(),
       direccion: [null, Validators.required],
       coords: [null, Validators.required],
@@ -45,13 +46,8 @@ export class ObservationService {
     });
   }
 
-  get enumValues(): ObservationValues {
-    return (values as any).default;
-  }
-
-  public resetObservation() {
-    this.pictures = [];
-    this.form.patchValue({
+  public resetObservationForm(form: FormGroup) {
+    form.patchValue({
       nombre: {
         cientifico: null,
         vulgar: null,
@@ -66,12 +62,12 @@ export class ObservationService {
       tutor: false,
       comentario: ''
     });
-    this.form.markAsUntouched();
+    form.markAsUntouched();
   }
 
-  public formToObservation(form: any): Observation {
+  public formToObservation(form: FormGroup): Observation {
     // TODO: Agregar controles de null/undefined
-    const { fecha, coords, direccion, comentario, taza, tutor, ...arbol } = form;
+    const { fecha, coords, direccion, comentario, taza, tutor, ...arbol } = (form as any);
     return { fecha, coords, direccion, arbol, comentario, taza, tutor };
   }
 }

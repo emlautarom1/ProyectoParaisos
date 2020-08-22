@@ -1,14 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Toma unas fotos</ion-title>
+    <ion-title>Fotografías</ion-title>
     <ion-buttons slot="start">
-      <ion-button routerLink="../current-location" routerDirection="backward">
+      <ion-button (click)="onFinishOperation()">
         <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-buttons slot="primary">
-      <ion-button routerLink="../details-form" routerDirection="forward">
-        <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -19,7 +14,7 @@
     <div id="prompt-or-selected-picture">
       <div id="selected-picture" *ngIf="selectedPicture">
         <img [src]="selectedPicturePreview">
-        <ion-icon class="delete-button delete-button-big" name="close" (click)="clearSelectedPicture()"></ion-icon>
+        <ion-icon class="delete-button delete-button-big" name="close" (click)="onClearSelectedPicture()"></ion-icon>
       </div>
       <div id="picture-prompt" *ngIf="!selectedPicture" (click)="imginput.click()">
         <svg style="opacity: 10%; height: 100%" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 352">
@@ -37,7 +32,7 @@
   <div id="taken-pictures-container">
     <span class="taken-picture" *ngFor="let picture of pictures">
       <img [src]="getPicturePreview(picture)" alt="" (click)="onSelectedPicture(picture)">
-      <ion-icon class="delete-button" name="close" (click)="deletePicture(picture)"></ion-icon>
+      <ion-icon class="delete-button" name="close" (click)="onDeletePicture(picture)"></ion-icon>
     </span>
   </div>
 </ion-content>

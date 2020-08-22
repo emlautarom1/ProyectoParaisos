@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Tu ubicación actual</ion-title>
-    <ion-buttons slot="primary">
-      <ion-button routerLink="../tree-pictures" routerDirection="forward">
-        <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
+    <ion-buttons slot="start">
+      <ion-button (click)="onReturn()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

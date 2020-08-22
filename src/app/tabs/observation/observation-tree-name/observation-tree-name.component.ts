@@ -1,15 +1,15 @@
 import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
+import { ObservationService } from '@app/services/observation.service';
 import { ModalController, AlertController } from '@ionic/angular';
 
 import { Name as TreeName } from '@app/models/tree';
-import { ObservationService } from '@app/services/observation.service';
 
 @Component({
-  selector: 'app-observation-details-form-tree-name',
-  templateUrl: './observation-details-form-tree-name.component.html',
-  styleUrls: ['./observation-details-form-tree-name.component.scss'],
+  selector: 'app-observation-tree-name',
+  templateUrl: './observation-tree-name.component.html',
+  styleUrls: ['./observation-tree-name.component.scss'],
 })
-export class ObservationDetailsFormTreeNameComponent implements OnInit, OnDestroy {
+export class ObservationTreeNameComponent implements OnInit, OnDestroy {
   names: TreeName[];
 
   constructor(
@@ -20,7 +20,7 @@ export class ObservationDetailsFormTreeNameComponent implements OnInit, OnDestro
 
   ngOnInit() {
     history.pushState({ modal: true }, null);
-    this.names = this.obsService.enumValues.nombres;
+    this.names = this.obsService.getObservationEnumValues().nombres;
   }
 
   ngOnDestroy() {
