@@ -10,6 +10,7 @@ import { AgmCoreModule } from '@agm/core';
 import { RegionMapPage } from './region-map.page';
 import { RepositoryService } from '@app/services/repository.service';
 import { RegionMapObservationDetailsComponent } from './region-map-observation-details/region-map-observation-details.component';
+import { ExcelService } from '@app/services/excel.service';
 
 const routes: Routes = [
   {
@@ -32,6 +33,7 @@ const routes: Routes = [
   ],
   providers: [
     RepositoryService,
+    ExcelService,
   ],
   entryComponents: [
     RegionMapObservationDetailsComponent,
