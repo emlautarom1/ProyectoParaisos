@@ -1,30 +1,57 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
+import { ObservationDTO } from '@app/models/observation';
+import { Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
 
-import { RegionMapSettingsComponent } from './region-map-settings/region-map-settings.component';
+import { RepositoryService } from '@app/services/repository.service';
+import { ExcelService } from '@app/services/excel.service';
+import { RegionMapObservationDetailsComponent } from './region-map-observation-details/region-map-observation-details.component';
+
 
 @Component({
   selector: 'app-region-map',
   templateUrl: './region-map.page.html',
   styleUrls: ['./region-map.page.scss'],
 })
-export class RegionMapPage {
+export class RegionMapPage implements OnInit {
+  registeredObservations: Observable<ObservationDTO[]>;
   unslCoords = { lat: -33.292183, lng: -66.339610 };
 
   constructor(
-    private modalCtrl: ModalController
+    private repository: RepositoryService,
+    private excelService: ExcelService,
+    private modalCtrl: ModalController,
+    private toastCtrl: ToastController,
   ) { }
 
-  onDownload() {
-    console.log('Descargando datos...');
+  async ngOnInit() {
+    await this.getRegisteredObservations();
   }
 
-  async onFilterOptions() {
+  getRegisteredObservations() {
+    this.registeredObservations = this.repository.getAllObservations();
+  }
+
+  async onRefresh() {
+    const toast = await this.toastCtrl.create({
+      message: 'Actualizando datos...',
+      duration: 1000,
+    });
+    toast.present();
+    this.getRegisteredObservations();
+  }
+
+  async onExportData() {
+    const observations = await this.registeredObservations.pipe(first()).toPromise();
+    await this.excelService.exportObservationsAsExcel(observations);
+  }
+
+  async onMarkerClick(observation: ObservationDTO) {
     const modal = await this.modalCtrl.create({
-      component: RegionMapSettingsComponent
+      component: RegionMapObservationDetailsComponent,
+      componentProps: { observation }
     });
     await modal.present();
-    const { data } = await modal.onWillDismiss();
-    console.log("Settings data: ", data);
   }
 }

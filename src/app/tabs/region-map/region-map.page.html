@@ -2,8 +2,8 @@
   <ion-toolbar>
     <ion-title>Mapa de Observaciones</ion-title>
     <ion-buttons slot="primary">
-      <ion-button (click)="onDownload()">
-        <ion-icon slot="icon-only" name="cloud-download-outline"></ion-icon>
+      <ion-button (click)="onRefresh()">
+        <ion-icon slot="icon-only" name="refresh-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -11,11 +11,16 @@
 
 <ion-content>
   <agm-map [latitude]="unslCoords.lat" [longitude]="unslCoords.lng" [zoom]="16" disableDefaultUI="true"
-    mapTypeId="satellite" style="height: 100%">
+    mapTypeId="hybrid" style="height: 100%">
+    <agm-marker *ngFor="let e of registeredObservations | async" [latitude]="e.obs.coords.lat"
+      [longitude]="e.obs.coords.lng" (markerClick)="onMarkerClick(e)">
+    </agm-marker>
   </agm-map>
+
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="onFilterOptions()">
-      <ion-icon name="options"></ion-icon>
+    <ion-fab-button (click)="onExportData()">
+      <ion-icon name="document-attach-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
 </ion-content>
