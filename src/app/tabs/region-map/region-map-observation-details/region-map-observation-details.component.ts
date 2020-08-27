@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnDestroy, HostListener } from '@angular/core';
 import { ObservationDTO, Observation } from '@app/models/observation';
 import { ModalController } from '@ionic/angular';
+import { RepositoryService } from '@app/services/repository.service';
 
 @Component({
   selector: 'app-region-map-observation-details',
@@ -10,17 +11,24 @@ import { ModalController } from '@ionic/angular';
 export class RegionMapObservationDetailsComponent implements OnInit, OnDestroy {
   @Input() observationDTO: ObservationDTO;
   observation: Observation;
-  pictures: string[]; // ? Usar URL o otro formato
+  pictures: URL[]; // ? Usar URL o otro formato
 
   constructor(
+    private repositoryService: RepositoryService,
     private modalCtrl: ModalController,
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     history.pushState({ modal: true }, null);
 
+    console.log("Got observation: ", this.observationDTO);
     this.observation = this.observationDTO.obs;
-    this.pictures = this.observationDTO.pictures;
+    // this.pictures = await Promise.all(
+    //   this.observationDTO.pictures.map(url =>
+    //     this.repositoryService.ImageURLtoDownloadURL(url)
+    //   )
+    // );
+    this.pictures = this.dummyPictures();
   }
 
   ngOnDestroy() {
@@ -32,5 +40,9 @@ export class RegionMapObservationDetailsComponent implements OnInit, OnDestroy {
   @HostListener('window:popstate')
   onReturn() {
     this.modalCtrl.dismiss();
+  }
+
+  private dummyPictures(): URL[] {
+    return Array(5).fill(new URL("https://firebasestorage.googleapis.com/v0/b/proyecto-paraisos.appspot.com/o/fotos%2F7a527217-84fb-4a0a-9314-bbc71b923fa2.jpg?alt=media&token=90ae9c18-0a29-4ce5-8497-13b66fa5c0f2"));
   }
 }
