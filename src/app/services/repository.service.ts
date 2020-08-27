@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ObservationDTO } from '@app/models/observation';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { Observable, of } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,9 @@ import { first } from 'rxjs/operators';
 export class RepositoryService {
   private observations: ObservationDTO[] = [
     {
-      pictures: [],
+      pictures: [
+        "fotos/7a527217-84fb-4a0a-9314-bbc71b923fa2.jpg",
+      ],
       obs: {
         arbol: {
           "poda": "Interferencia con Cableado",
@@ -32,6 +35,7 @@ export class RepositoryService {
 
   constructor(
     private db: AngularFirestore,
+    private storage: AngularFireStorage,
   ) { }
 
   public getAllObservations(): Observable<ObservationDTO[]> {
@@ -41,5 +45,16 @@ export class RepositoryService {
       .valueChanges()
       .pipe(first());
     */
+  }
+
+  public ImageURLtoDownloadURL(url: string): Promise<URL> {
+    return this.storage
+      .ref(url)
+      .getDownloadURL()
+      .pipe(
+        map(raw => new URL(raw)),
+        first()
+      )
+      .toPromise();
   }
 }
