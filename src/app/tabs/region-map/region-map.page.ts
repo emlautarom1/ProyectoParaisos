@@ -50,7 +50,7 @@ export class RegionMapPage implements OnInit {
   async onMarkerClick(observation: ObservationDTO) {
     const modal = await this.modalCtrl.create({
       component: RegionMapObservationDetailsComponent,
-      componentProps: { observation }
+      componentProps: { observationDTO: observation }
     });
     await modal.present();
   }

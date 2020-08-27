@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy, HostListener } from '@angular/core';
-import { ObservationDTO } from '@app/models/observation';
+import { ObservationDTO, Observation } from '@app/models/observation';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -8,7 +8,9 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./region-map-observation-details.component.scss'],
 })
 export class RegionMapObservationDetailsComponent implements OnInit, OnDestroy {
-  @Input() observation: ObservationDTO;
+  @Input() observationDTO: ObservationDTO;
+  observation: Observation;
+  pictures: string[]; // ? Usar URL o otro formato
 
   constructor(
     private modalCtrl: ModalController,
@@ -17,7 +19,8 @@ export class RegionMapObservationDetailsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     history.pushState({ modal: true }, null);
 
-    console.log("Details for: ", this.observation);
+    this.observation = this.observationDTO.obs;
+    this.pictures = this.observationDTO.pictures;
   }
 
   ngOnDestroy() {
