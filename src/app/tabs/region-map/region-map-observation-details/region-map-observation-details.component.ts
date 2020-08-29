@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnDestroy, HostListener } from '@angular/core';
 import { ObservationDTO, Observation } from '@app/models/observation';
-import { ModalController, AnimationController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { RepositoryService } from '@app/services/repository.service';
 import { PictureModalComponent } from '@app/shared-components/picture-modal/picture-modal.component';
 
@@ -12,25 +12,23 @@ import { PictureModalComponent } from '@app/shared-components/picture-modal/pict
 export class RegionMapObservationDetailsComponent implements OnInit, OnDestroy {
   @Input() observationDTO: ObservationDTO;
   observation: Observation;
-  pictures: URL[]; // ? Usar URL o otro formato
+  pictures: URL[];
 
   constructor(
     private repositoryService: RepositoryService,
-    private animationCtrl: AnimationController,
     private modalCtrl: ModalController,
   ) { }
 
   async ngOnInit() {
     history.pushState({ modal: true }, null);
 
-    console.log("Got observation: ", this.observationDTO);
+    console.log('Got observation: ', this.observationDTO);
     this.observation = this.observationDTO.obs;
-    // this.pictures = await Promise.all(
-    //   this.observationDTO.pictures.map(url =>
-    //     this.repositoryService.ImageURLtoDownloadURL(url)
-    //   )
-    // );
-    this.pictures = this.dummyPictures();
+    this.pictures = await Promise.all(
+      this.observationDTO.pictures.map(url =>
+        this.repositoryService.ImageURLtoDownloadURL(url)
+      )
+    );
   }
 
   ngOnDestroy() {
@@ -45,7 +43,7 @@ export class RegionMapObservationDetailsComponent implements OnInit, OnDestroy {
       componentProps: {
         pictureURL: picture,
       },
-      cssClass: "transparent-modal",
+      cssClass: 'transparent-modal',
       animated: false,
     });
     await modal.present();
@@ -54,9 +52,5 @@ export class RegionMapObservationDetailsComponent implements OnInit, OnDestroy {
   @HostListener('window:popstate')
   onReturn() {
     this.modalCtrl.dismiss();
-  }
-
-  private dummyPictures(): URL[] {
-    return Array(5).fill(new URL("https://firebasestorage.googleapis.com/v0/b/proyecto-paraisos.appspot.com/o/fotos%2F7a527217-84fb-4a0a-9314-bbc71b923fa2.jpg?alt=media&token=90ae9c18-0a29-4ce5-8497-13b66fa5c0f2"));
   }
 }

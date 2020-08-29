@@ -35,7 +35,7 @@ export class ExcelService {
         XLSX.utils.sheet_add_aoa(ws, [[
           'Tutor',
           'Comentario',
-        ]], { origin: 'K1' })
+        ]], { origin: 'K1' });
         XLSX.utils.sheet_add_aoa(ws, [[
           'Nombre',
           'Diametro (cm)',
@@ -47,7 +47,7 @@ export class ExcelService {
           'Taza Apropiada',
         ]], { origin: 'C2' });
 
-        const formattedObservations = observations.map(this.observationDTOtoExcelRow)
+        const formattedObservations = observations.map(this.observationDTOtoExcelRow);
 
         XLSX.utils.sheet_add_aoa(
           ws,
@@ -60,7 +60,7 @@ export class ExcelService {
         XLSX.writeFile(wb, 'observaciones.xlsx');
         resolve();
       } catch (e) {
-        reject(e)
+        reject(e);
       }
     });
   }
