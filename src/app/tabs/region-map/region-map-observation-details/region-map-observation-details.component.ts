@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, OnDestroy, HostListener } from '@angular/core';
 import { ObservationDTO, Observation } from '@app/models/observation';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AnimationController } from '@ionic/angular';
 import { RepositoryService } from '@app/services/repository.service';
+import { PictureModalComponent } from '@app/shared-components/picture-modal/picture-modal.component';
 
 @Component({
   selector: 'app-region-map-observation-details',
@@ -15,6 +16,7 @@ export class RegionMapObservationDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private repositoryService: RepositoryService,
+    private animationCtrl: AnimationController,
     private modalCtrl: ModalController,
   ) { }
 
@@ -35,6 +37,18 @@ export class RegionMapObservationDetailsComponent implements OnInit, OnDestroy {
     if (history.state.modal) {
       history.back();
     }
+  }
+
+  async onPictureClick(picture: URL) {
+    const modal = await this.modalCtrl.create({
+      component: PictureModalComponent,
+      componentProps: {
+        pictureURL: picture,
+      },
+      cssClass: "transparent-modal",
+      animated: false,
+    });
+    await modal.present();
   }
 
   @HostListener('window:popstate')

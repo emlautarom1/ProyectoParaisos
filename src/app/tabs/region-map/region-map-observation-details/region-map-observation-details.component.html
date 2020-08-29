@@ -121,8 +121,7 @@
         , grabCursor: true
         , spaceBetween: 10
         }">
-        <ion-slide *ngFor="let e of pictures">
-          <!-- TODO: Add on click full screen viewer -->
+        <ion-slide *ngFor="let e of pictures" (click)="onPictureClick(e)">
           <ion-img [src]="e"></ion-img>
         </ion-slide>
       </ion-slides>
