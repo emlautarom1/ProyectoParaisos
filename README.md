@@ -1,5 +1,5 @@
 <p align="center">
-    <img height="128" src="src/assets/icons/icon-128x128.png">
+    <img height="128" src="src/assets/icons/android-chrome-192x192.png">
 <p>
 
 # Proyecto Paraísos
