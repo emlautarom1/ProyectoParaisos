@@ -1,5 +1,5 @@
-import * as gen from 'uuid';
+import { v4 } from 'uuid';
 
 export function UUID(): string {
-    return gen.v4();
+    return v4();
 }
