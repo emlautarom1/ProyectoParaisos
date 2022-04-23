@@ -71,5 +71,5 @@
     "ts-node": "~8.3.0",
     "typescript": "~4.4.4"
   },
-  "description": "An Ionic project"
+  "description": "Aplicación web para el área de Ecología de la Facultad de Química, Bioquímica y Farmacia de la Universidad Nacional de San Luis, Argentina."
 }
