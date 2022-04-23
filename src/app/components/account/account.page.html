@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Mi Cuenta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="userDetails$ | async as user; else notLogged" id="logged-in-container">
+    <div id="current-user">
+      <ion-item>
+        <ion-avatar slot="start">
+          <img referrerpolicy="no-referrer" [src]="user.photoURL || 'assets/icons/icon-512x512.png'">
+        </ion-avatar>
+        <ion-label>
+          <h3>{{ user.displayName }}</h3>
+          <p> {{ user.email }}</p>
+        </ion-label>
+      </ion-item>
+    </div>
+    <div id="logged-in-buttons">
+      <ion-button expand="block" fill="outline" color="danger" (click)="signOut()">
+        Cerrar Sesión
+      </ion-button>
+    </div>
+  </div>
+
+  <ng-template #notLogged>
+    <div id="not-logged-container">
+      <h3>No has iniciado sesión</h3>
+      <img src="assets/imgs/people.jpg" alt="Iniciar Sesión">
+      <ion-button expand="full" (click)="signIn()" style="width: 100%;">
+        Iniciar Sesión
+        <ion-icon slot="end" name="logo-google"></ion-icon>
+      </ion-button>
+    </div>
+  </ng-template>
+</ion-content>

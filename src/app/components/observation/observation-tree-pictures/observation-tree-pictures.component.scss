@@ -1,0 +1,68 @@
+#prompt-or-selected-container {
+  height: 60%;
+}
+
+#prompt-or-selected-picture {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  #selected-picture {
+    max-height: 80%;
+    max-width: 80%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .delete-button-big {
+      width: 25px;
+      height: 25px;
+    }
+
+    img {
+      border-radius: 5px;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  #picture-prompt {
+    height: 60%;
+    text-align: center;
+  }
+}
+
+#taken-pictures-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  height: 40%;
+  overflow-y: scroll;
+  box-shadow: 0px -2px 3px 0px rgba(0, 0, 0, 0.15);
+
+  .taken-picture {
+    box-sizing: border-box;
+    flex: 0 0 33.3%;
+    position: relative;
+
+    img {
+      padding: 1px;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+.delete-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px;
+  background-color: white;
+  border-radius: 100%;
+  box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.35);
+}

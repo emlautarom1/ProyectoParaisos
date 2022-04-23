@@ -1,17 +1,17 @@
-import { LatLngLiteral } from '@agm/core';
-import { Tree } from './tree';
+import { Tree } from 'src/app/models/tree';
+import LatLngLiteral = google.maps.LatLngLiteral;
 
 export interface ObservationDTO {
-    pictures: string[];
-    obs: Observation;
+  pictures: string[];
+  obs: Observation;
 }
 
 export interface Observation {
-    fecha: string;
-    coords: LatLngLiteral;
-    direccion: string;
-    arbol: Tree;
-    comentario: string;
-    taza: boolean;
-    tutor: boolean;
+  fecha: string;
+  coords: LatLngLiteral;
+  direccion: string;
+  arbol: Tree;
+  comentario: string;
+  taza: boolean;
+  tutor: boolean;
 }

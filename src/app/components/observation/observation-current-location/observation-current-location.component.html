@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Tu ubicación actual</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="onReturn()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ng-container *ngIf="mapsService.apiStatus$ | async">
+    <google-map *ngIf="coords; else loading" height="100%" width="100%" [options]="mapOptions">
+      <map-marker [position]="coords"></map-marker>
+    </google-map>
+    <ng-template #loading>
+      <div id="map-spinner-container">
+        <ion-spinner></ion-spinner>
+        <p>Cargando ubicación</p>
+      </div>
+    </ng-template>
+  </ng-container>
+</ion-content>

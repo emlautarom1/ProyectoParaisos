@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { NoNullValuesValidator } from '@app/utils/custom-validators';
-import { DateService } from './date.service';
-import { ObservationValues } from '@app/models/observation-values';
-import * as values from '@app/models/observation-values.json';
-import { Observation } from '@app/models/observation';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observation } from 'src/app/models/observation';
+import { ObservationValues } from 'src/app/models/observation-values';
+import { defaultObservationValues } from 'src/app/models/observation-values-default';
+import { DateService } from 'src/app/services/date.service';
+import { noNullValuesValidator } from 'src/app/utils/custom-validators';
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class ObservationService {
   ) { }
 
   getObservationEnumValues(): ObservationValues {
-    return (values as any).default;
+    return defaultObservationValues;
   }
 
   public buildObservationForm(): FormGroup {
@@ -27,7 +28,7 @@ export class ObservationService {
       nombre: [{
         cientifico: null,
         vulgar: null,
-      }, NoNullValuesValidator],
+      }, noNullValuesValidator],
       diametro: [null, [
         Validators.required,
         Validators.pattern('^[0-9]*(.[0-9]+)?$')

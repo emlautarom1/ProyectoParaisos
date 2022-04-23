@@ -1,44 +1,43 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import * as firebase from 'firebase/app';
+import { AuthProvider, GoogleAuthProvider } from '@angular/fire/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable } from 'rxjs';
-import { map, first } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
+import { User } from 'src/app/models/user';
 
-import { User } from '@app/models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  isAuthenticated = false;
+  private googleProvider: AuthProvider;
 
   constructor(private afAuth: AngularFireAuth) {
-    this.authenticated.subscribe(result => {
-      this.isAuthenticated = result;
-    });
+    this.googleProvider = new GoogleAuthProvider();
   }
 
-  get authenticated(): Observable<boolean> {
-    return this.afAuth.authState.pipe(map(st => st !== null));
+  async isAuthenticated(): Promise<boolean> {
+    return this.afAuth.authState.pipe(
+      map(st => !!st),
+      first(),
+    ).toPromise();
   }
 
-  async getUserDetails(): Promise<User | undefined> {
-    if (this.isAuthenticated) {
-      const { displayName, email, photoURL } = await this.afAuth.authState.pipe(first()).toPromise();
-      return {
-        displayName,
-        email,
-        photoURL
-      };
-    }
+  get currentUser$(): Observable<User | undefined> {
+    return this.afAuth.authState.pipe(
+      map(user => {
+        if (!user) { return undefined };
+        const { displayName, email, photoURL } = user;
+        return { displayName, email, photoURL };
+      })
+    );
   }
 
   public async signIn() {
-    const googleProvider = new firebase.auth.GoogleAuthProvider();
-    await this.afAuth.auth.signInWithRedirect(googleProvider);
+    await this.afAuth.signInWithRedirect(this.googleProvider);
   }
 
   public async signOut() {
-    await this.afAuth.auth.signOut();
+    await this.afAuth.signOut();
   }
 }

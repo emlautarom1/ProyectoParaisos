@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ObservationDTO } from '@app/models/observation';
+import { ObservationDTO } from 'src/app/models/observation';
 import * as XLSX from 'xlsx';
+
 
 @Injectable({
   providedIn: 'root'
