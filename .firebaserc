@@ -1,4 +1,13 @@
 {
+  "targets": {
+    "proyecto-paraisos": {
+      "hosting": {
+        "app": [
+          "proyecto-paraisos"
+        ]
+      }
+    }
+  },
   "projects": {
     "default": "proyecto-paraisos"
   }

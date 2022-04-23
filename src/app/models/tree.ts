@@ -1,14 +1,14 @@
 export interface Tree {
-    altura: string;
-    diametro: number;
-    fenologia: string[];
-    nombre: Name;
-    poda: string;
-    sanidad: string;
-    sintomas: string[];
+  altura: string;
+  diametro: number;
+  fenologia: string[];
+  nombre: TreeName;
+  poda: string;
+  sanidad: string;
+  sintomas: string[];
 }
 
-export interface Name {
-    cientifico: string;
-    vulgar: string;
+export interface TreeName {
+  cientifico: string;
+  vulgar: string;
 }

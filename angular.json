@@ -33,14 +33,19 @@
               "src/manifest.webmanifest"
             ],
             "styles": [
-              {
-                "input": "src/theme/variables.scss"
-              },
-              {
-                "input": "src/global.scss"
-              }
+              "src/theme/variables.scss",
+              "src/global.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "aot": false,
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true,
+            "serviceWorker": true,
+            "ngswConfigPath": "ngsw-config.json"
           },
           "configurations": {
             "production": {
@@ -53,7 +58,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -65,9 +69,7 @@
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
                 }
-              ],
-              "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json"
+              ]
             },
             "ci": {
               "progress": false
@@ -125,14 +127,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": ["**/node_modules/**"]
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         },
         "e2e": {
@@ -150,28 +150,14 @@
             }
           }
         },
-        "ionic-cordova-build": {
-          "builder": "@ionic/angular-toolkit:cordova-build",
+        "deploy": {
+          "builder": "@angular/fire:deploy",
           "options": {
-            "browserTarget": "app:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "app:build:production"
-            }
-          }
-        },
-        "ionic-cordova-serve": {
-          "builder": "@ionic/angular-toolkit:cordova-serve",
-          "options": {
-            "cordovaBuildTarget": "app:ionic-cordova-build",
-            "devServerTarget": "app:serve"
-          },
-          "configurations": {
-            "production": {
-              "cordovaBuildTarget": "app:ionic-cordova-build:production",
-              "devServerTarget": "app:serve:production"
-            }
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "app:build:production",
+            "firebaseProject": "proyecto-paraisos",
+            "firebaseHostingSite": "proyecto-paraisos"
           }
         }
       }

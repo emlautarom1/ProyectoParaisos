@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Mapa de Observaciones</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="onRefresh()">
+        <ion-icon slot="icon-only" name="refresh-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <google-map *ngIf="mapsService.apiStatus$ | async" height="100%" width="100%" [options]="mapOptions">
+    <map-marker *ngFor="let dto of registeredObservations$ | async" [position]="dto.obs.coords"
+      (mapClick)="onMarkerClick(dto)">
+    </map-marker>
+  </google-map>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="onExportData()">
+      <ion-icon name="document-attach-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireStorageReference, AngularFireStorage } from '@angular/fire/storage';
-import { UploadTask, UploadTaskSnapshot } from '@angular/fire/storage/interfaces';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/compat/storage';
+import { UploadTaskSnapshot } from '@angular/fire/compat/storage/interfaces';
+import { FormPicture } from 'src/app/models/form-picture';
+import { Observation, ObservationDTO } from 'src/app/models/observation';
+import { generateUUID } from 'src/app/utils/uuid';
 
-import { UUID } from '@app/utils/uuid';
-import { Observation, ObservationDTO } from '@app/models/observation';
-import { FormPicture } from '@app/models/form-picture';
 
 @Injectable({
   providedIn: 'root'
@@ -23,16 +23,16 @@ export class UploadService {
   }
 
   private async storeObservation(dto: ObservationDTO) {
-    await this.obsRef.add(dto);
+    return await this.obsRef.add(dto);
   }
 
-  private async storePicture(picture: FormPicture) {
-    const uuid = UUID();
+  private async storePicture(picture: FormPicture): Promise<string> {
+    const uuid = generateUUID();
     const extension = picture.name.split('.').pop();
     const fullName = `${uuid}.${extension}`;
 
     const ref = this.picRef.child(fullName);
-    const uploadTask: UploadTask = ref.put(picture.data);
+    const uploadTask: AngularFireUploadTask = ref.put(picture.data);
     const snap: UploadTaskSnapshot = await uploadTask;
     return snap.metadata.fullPath;
   }
@@ -42,6 +42,6 @@ export class UploadService {
       pictures.map(pic => this.storePicture(pic))
     );
     const dto: ObservationDTO = { obs: observation, pictures: urls };
-    await this.storeObservation(dto);
+    return await this.storeObservation(dto);
   }
 }

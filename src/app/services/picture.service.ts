@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import Compress from 'client-compress';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,7 +13,7 @@ export class PictureService {
   constructor() { }
 
   async processFileAsPicture(file: File) {
-    // TODO: Add rotation?
+    // TODO: Consider adding rotation
     const conversions = await this.compress.compress([file]);
     const { photo } = conversions[0];
     const url = URL.createObjectURL(photo.data);

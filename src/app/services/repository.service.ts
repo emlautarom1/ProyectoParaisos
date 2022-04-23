@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ObservationDTO } from '@app/models/observation';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireStorage } from '@angular/fire/storage';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
+import { ObservationDTO } from 'src/app/models/observation';
+
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class RepositoryService {
       .pipe(first());
   }
 
-  public ImageURLtoDownloadURL(url: string): Promise<URL> {
+  public imageURLtoDownloadURL(url: string): Promise<URL> {
     return this.storage
       .ref(url)
       .getDownloadURL()
