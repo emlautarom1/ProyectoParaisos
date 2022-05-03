@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { WikiService } from 'src/app/services/wiki.service';
 
 @Component({
   selector: 'app-wiki',
@@ -6,8 +7,38 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./wiki.page.scss'],
 })
 export class WikiPage implements OnInit {
-  constructor() { }
+  items = [
+    'Pokémon Yellow',
+    'Mega Man X',
+    'The Legend of Zelda',
+    'Pac-Man',
+    'Super Mario World',
+    'Pokémon Yellow',
+    'Mega Man X',
+    'The Legend of Zelda',
+    'Pac-Man',
+    'Super Mario World',
+    'Pokémon Yellow',
+    'Mega Man X',
+    'The Legend of Zelda',
+    'Pac-Man',
+    'Super Mario World',
+    'Pokémon Yellow',
+    'Mega Man X',
+    'The Legend of Zelda',
+    'Pac-Man',
+    'Super Mario World',
+    'Pokémon Yellow',
+    'Mega Man X',
+    'The Legend of Zelda',
+    'Pac-Man',
+    'Super Mario World',
+  ]
 
-  ngOnInit() { }
+  constructor(private wiki: WikiService) { }
+
+  ngOnInit() {
+    this.wiki.checkDB();
+  }
 
 }

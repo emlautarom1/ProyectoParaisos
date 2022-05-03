@@ -1,9 +1,36 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Wiki de Arboles</ion-title>
+    <ion-title>Wiki de Árboles</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar animated placeholder="Buscar"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <app-under-construction></app-under-construction>
+<ion-content>
+
+  <!-- List of Text Items -->
+  <ion-list>
+    <ion-item-group *ngFor="let _ of [0,0,0,0,0,0]">
+      <ion-item-divider>
+        <ion-label>A</ion-label>
+      </ion-item-divider>
+
+      <ion-item>
+        <ion-label>Angola</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Argentina</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Armenia</ion-label>
+      </ion-item>
+
+    </ion-item-group>
+
+    <ion-item *ngFor="let i of items">
+      <ion-label>{{ i }}</ion-label>
+    </ion-item>
+  </ion-list>
+
 </ion-content>
