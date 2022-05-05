@@ -22,6 +22,7 @@ import { ObservationComponent } from './components/observation/observation.compo
 import { PictureModalComponent } from './components/picture-modal/picture-modal.component';
 import { RegionMapObservationDetailsComponent } from './components/region-map/region-map-observation-details/region-map-observation-details.component';
 import { RegionMapPage } from './components/region-map/region-map.page';
+import { TreeDetailsComponent } from './components/wiki/tree-details/tree-details.component';
 import { WikiPage } from './components/wiki/wiki.page';
 
 
@@ -41,6 +42,7 @@ import { WikiPage } from './components/wiki/wiki.page';
     RegionMapObservationDetailsComponent,
     // Wiki
     WikiPage,
+    TreeDetailsComponent,
     // Modal
     PictureModalComponent,
   ],

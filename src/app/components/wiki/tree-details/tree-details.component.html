@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Detalles del Árbol</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="onReturn()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-img [src]="tree.img_url" [alt]="tree.nombre_cientifico" class="tree-img">
+  </ion-img>
+
+  <ion-list>
+    <ng-container *ngFor="let prop of treeProps">
+      <ion-item *ngIf="prop[1]">
+        <div>
+          <p>{{ prop[0] }}</p>
+          <p class="prop-value">{{ prop[1] }}</p>
+        </div>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+
+</ion-content>

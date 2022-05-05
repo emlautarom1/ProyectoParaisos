@@ -12,7 +12,7 @@
   <ng-container *ngIf="searchResults$ | async as results">
     <ion-list *ngIf="results.length > 0; else emptyResults">
       <ion-item *ngFor="let tree of results">
-        <ion-label>
+        <ion-label (click)="openTreeDetails(tree)">
           <h2> {{ tree.nombre_comun }} </h2>
           <p> {{ tree.nombre_cientifico }} </p>
         </ion-label>
