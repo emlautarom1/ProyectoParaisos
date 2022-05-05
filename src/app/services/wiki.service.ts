@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as fuzzysort from 'fuzzysort';
 import { defer, Observable, of } from 'rxjs';
-import { map, mergeMap, shareReplay, tap } from 'rxjs/operators';
+import { map, mergeMap, shareReplay } from 'rxjs/operators';
 import jsonDB from 'src/assets/wiki/db.json';
 import { TreeDetails } from '../models/tree-details';
 
@@ -25,10 +25,7 @@ export class WikiService {
   constructor() {
     this.searchIndex$ = defer(() =>
       of(this.database.map((entry, index) => this.treeToSearchEntry(index, entry)))
-    ).pipe(
-      tap(() => console.log('searchIndex prepared')),
-      shareReplay(1)
-    );
+    ).pipe(shareReplay(1));
   }
 
   private treeToSearchEntry(index: number, entry: TreeDetails): SearchEntry {
