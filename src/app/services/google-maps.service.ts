@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MapGeocoder } from '@angular/google-maps';
 import { EMPTY, Observable, of } from 'rxjs';
-import { catchError, mapTo, mergeMap, shareReplay, tap } from 'rxjs/operators';
+import { catchError, mapTo, mergeMap, shareReplay } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import GeocoderRequest = google.maps.GeocoderRequest;
 
@@ -18,7 +18,6 @@ export class GoogleMapsService {
     const url = `https://maps.googleapis.com/maps/api/js?key=${apiKey}`;
     this.apiStatus$ = httpClient.jsonp(url, 'callback')
       .pipe(
-        tap(_ => console.log('Loading Google Maps API...')),
         mapTo(true),
         catchError((err) => {
           console.log(err);
