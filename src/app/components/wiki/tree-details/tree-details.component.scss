@@ -1,8 +1,9 @@
 .tree-img {
   max-height: 50vh;
+  overflow: hidden;
 }
 
 .prop-value {
-  font-size: smaller;
+  font-size: small;
   opacity: 60%;
 }
