@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { IonContent, LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { Observable, Subscription } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { FormPicture } from 'src/app/models/form-picture';
 import { ObservationValues } from 'src/app/models/observation-values';
 import { AuthService } from 'src/app/services/auth.service';
@@ -55,7 +55,7 @@ export class ObservationComponent implements OnInit, OnDestroy {
       ),
     );
     this.currentAddress$ = this.currentPosition$.pipe(
-      mergeMap(({ lat, lng }) => this.geoService.latLngToAddress(lat, lng))
+      switchMap(({ lat, lng }) => this.geoService.latLngToAddress(lat, lng))
     );
 
     const positionSub = this.currentPosition$.subscribe(coords => this.form.patchValue({ coords }));

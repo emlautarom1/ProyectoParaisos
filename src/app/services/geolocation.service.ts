@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { interval, Observable } from 'rxjs';
+import { interval, Observable, of } from 'rxjs';
 import { catchError, debounce, map, shareReplay } from 'rxjs/operators';
 import { GoogleMapsService } from './google-maps.service';
 import GeocoderRequest = google.maps.GeocoderRequest;
@@ -35,7 +35,7 @@ export class GeolocationService {
     const request: GeocoderRequest = { location: { lat, lng } };
     return this.googleMaps.geocode(request).pipe(
       map(res => res.results[2].formatted_address),
-      catchError(_ => GeolocationService.UNKNOWN_ADDRESS)
+      catchError(_ => of(GeolocationService.UNKNOWN_ADDRESS))
     );
   }
 
