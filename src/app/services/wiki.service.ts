@@ -6,8 +6,8 @@ import jsonDB from 'src/assets/wiki/db.json';
 import { TreeDetails } from '../models/tree-details';
 
 interface SearchEntry {
-  index: number,
-  [field: number]: Fuzzysort.Prepared
+  index: number;
+  [field: number]: Fuzzysort.Prepared;
 }
 
 @Injectable({
@@ -30,15 +30,15 @@ export class WikiService {
 
   private treeToSearchEntry(index: number, entry: TreeDetails): SearchEntry {
     return {
-      index: index,
+      index,
       1: fuzzysort.prepare(entry.nombre_cientifico),
       2: fuzzysort.prepare(entry.nombre_comun),
-    }
+    };
   }
 
   searchFor(query: string) {
     const cleanQuery = query.trim();
-    return cleanQuery == ''
+    return cleanQuery === ''
       ? of([])
       : this.searchIndex$.pipe(
         mergeMap(index => fuzzysort.goAsync(query, index, this.searchOptions)),

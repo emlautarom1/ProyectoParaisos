@@ -26,7 +26,7 @@ export class AuthService {
   get currentUser$(): Observable<User | undefined> {
     return this.afAuth.authState.pipe(
       map(user => {
-        if (!user) { return undefined };
+        if (!user) { return undefined; };
         const { displayName, email, photoURL } = user;
         return { displayName, email, photoURL };
       })

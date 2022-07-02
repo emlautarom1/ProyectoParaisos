@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire/compat/';

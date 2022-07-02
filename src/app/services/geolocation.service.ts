@@ -9,12 +9,13 @@ import GeocoderRequest = google.maps.GeocoderRequest;
   providedIn: 'root'
 })
 export class GeolocationService {
-  private static UNKNOWN_ADDRESS = 'Dirección desconocida';
+  private static unknownAddress = 'Dirección desconocida';
   private position$: Observable<GeolocationPosition>;
 
   constructor(private googleMaps: GoogleMapsService) {
     if ('geolocation' in navigator) {
       this.position$ = new Observable<GeolocationPosition>(observer => {
+        /* eslint-disable prefer-arrow/prefer-arrow-functions */
         const watchId = window.navigator.geolocation.watchPosition(
           function success(pos) { observer.next(pos); },
           function error(err) { observer.error(err); },
@@ -35,7 +36,7 @@ export class GeolocationService {
     const request: GeocoderRequest = { location: { lat, lng } };
     return this.googleMaps.geocode(request).pipe(
       map(res => res.results[2].formatted_address),
-      catchError(_ => of(GeolocationService.UNKNOWN_ADDRESS))
+      catchError(_ => of(GeolocationService.unknownAddress))
     );
   }
 

@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { TreeDetails } from 'src/app/models/tree-details';
 
@@ -7,7 +7,7 @@ import { TreeDetails } from 'src/app/models/tree-details';
   templateUrl: './tree-details.component.html',
   styleUrls: ['./tree-details.component.scss'],
 })
-export class TreeDetailsComponent implements OnInit {
+export class TreeDetailsComponent implements OnInit, OnDestroy {
   @Input() tree: TreeDetails;
   treeProps: [string, string?][];
 
@@ -17,12 +17,12 @@ export class TreeDetailsComponent implements OnInit {
     history.pushState({ modal: true }, null);
 
     this.treeProps = [
-      ["Nombre Científico", this.tree.nombre_cientifico],
-      ["Familia", this.tree.familia],
-      ["Sinónimos", this.tree.sinonimos],
-      ["Nombre Común", this.tree.nombre_comun],
-      ["Lugar de Origen", this.tree.lugar_de_origen],
-      ["Etimología", this.tree.etimologia]
+      ['Nombre Científico', this.tree.nombre_cientifico],
+      ['Familia', this.tree.familia],
+      ['Sinónimos', this.tree.sinonimos],
+      ['Nombre Común', this.tree.nombre_comun],
+      ['Lugar de Origen', this.tree.lugar_de_origen],
+      ['Etimología', this.tree.etimologia]
     ];
   }
 

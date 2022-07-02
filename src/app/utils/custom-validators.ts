@@ -1,6 +1,6 @@
 import { AbstractControl } from '@angular/forms';
 
-export function noNullValuesValidator(control: AbstractControl): { [key: string]: any } | null {
+export const noNullValuesValidator = (control: AbstractControl): { [key: string]: any } | null => {
   const entries = Object.entries(control.value);
 
   let invalid: string;
@@ -11,4 +11,4 @@ export function noNullValuesValidator(control: AbstractControl): { [key: string]
     }
   }
   return invalid ? { falsyKey: { value: invalid } } : null;
-}
+};
